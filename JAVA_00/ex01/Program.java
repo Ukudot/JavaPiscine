@@ -16,7 +16,7 @@ class	Program
 		prime = true;
 		if (num <= 1)
 		{
-			System.out.println(num + ": Invalid number");
+			System.err.println(num + ": Invalid number");
 			System.exit(-1);
 		}
 		if (num != 2 && num % 2 == 0)
