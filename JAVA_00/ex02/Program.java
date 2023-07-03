@@ -5,7 +5,7 @@ class	Program
 	public static boolean	isPrime(int num)
 	{
 		if (num <= 1)
-			System.exit(-1);
+			return (false);
 		if (num != 2 && num % 2 == 0)
 			return (false);
 		else if (num == 2)
@@ -46,6 +46,11 @@ class	Program
 		{
 			System.out.print("Enter a number: ");
 			num = scanner.nextInt();
+			if (num < 0)
+			{
+				System.err.println("Invalid input");
+				System.exit(-1);
+			}
 			if (isPrime(sum(num)))
 				res++;
 		}
