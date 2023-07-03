@@ -1,7 +1,5 @@
-class	Program
-{
-	public static void	main(String args[])
-	{
+class	Program {
+	public static void	main(String args[]) {
 		int	num;
 		int	sum;
 

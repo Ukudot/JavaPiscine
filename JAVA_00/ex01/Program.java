@@ -1,9 +1,7 @@
 import	java.util.Scanner;
 
-class	Program
-{
-	public static void	main(String args[])
-	{
+class	Program {
+	public static void	main(String args[]) {
 		Scanner	scanner = new Scanner(System.in);
 		int		num;
 		int		steps;
@@ -14,22 +12,20 @@ class	Program
 		System.out.println("");
 		steps = 1;
 		prime = true;
-		if (num <= 1)
-		{
+		if (num <= 1) {
 			System.err.println(num + ": Invalid number");
 			System.exit(-1);
 		}
-		if (num != 2 && num % 2 == 0)
+		if (num != 2 && num % 2 == 0) {
 			prime = false;
-		else if (num == 2)
+		}
+		else if (num == 2) {
 			prime = true;
-		else
-		{
-			for (int i = 3; i < num / i; i += 2)
-			{
+		}
+		else {
+			for (int i = 3; i < num / i; i += 2) {
 				steps++;
-				if (num % i == 0)
-				{
+				if (num % i == 0) {
 					prime = false;
 					break ;
 				}
