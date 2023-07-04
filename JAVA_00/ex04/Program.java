@@ -2,6 +2,7 @@ import	java.util.Scanner;
 
 class	Program {
 	static final int	DEFAULT_VALUE = -1;
+	static int			max_occ;
 
 	private static void	putInArray(int array[][], char c, int length) {
 		int	i;
@@ -32,12 +33,19 @@ class	Program {
 			if (array[max_ind][1] < array[ind][1]) {
 					max_ind = ind;
 			}
+			else if (array[max_ind][1] == array[ind][1]) {
+				if (array[max_ind][0] > array[ind][0]) {
+					max_ind = ind;
+				}
+			}
+		}
+		if (array[max_ind][1] == -1) {
+			return (-1);
 		}
 		return (max_ind);
 	}
 
-	private static void	putInHisto(int histo[][], char elem, int occ, int row) {
-		static int	max_occ;
+	private static void	putInHisto(int histo[][], int elem, int occ, int row) {
 		int i;
 		int	n_ite;
 
@@ -48,7 +56,7 @@ class	Program {
 			}
 		}
 		i = 0;
-		n_ite = (float) occ / max_occ * 10;
+		n_ite = (int) ((float) occ / max_occ * 10);
 		histo[row][i] = elem;
 		for (i = 1; i < n_ite + 1 ; i++) {
 			histo[row][i] = '#';
@@ -56,21 +64,61 @@ class	Program {
 		histo[row][i] = occ;
 	}
 
+	private static void	printPadded(int num, int padding)
+	{
+		if (padding == 0) {
+			return ;
+		}
+		else if (num  == 0) {
+			printPadded(num, padding - 1);
+			System.out.print(" ");
+		}
+		else {
+			printPadded(num / 10, padding - 1);
+			System.out.print(num % 10);
+		}
+	}
+
+	private static void	printPadded(char c, int padding)
+	{
+		for (int i = 1; i < padding; i++) {
+			System.out.print(" ");
+		}
+		System.out.print(c);
+	}
+
 	private static void	printHisto(int histo[][]) {
 		System.out.println("");
-		for (int col = 10; col >= 0; col--)
+		for (int col = 11; col >= 0; col--)
 		{
 			for (int row = 0; row < 10; row++)
 			{
 				if (histo[row][col] == -1)
 					break;
 				else if (histo[row][col + 1] == -1)
-					//print number
+					printPadded(histo[row][col], 3);
 				else
-					//print char
+					printPadded((char) histo[row][col], 3);
 			}
 			System.out.println("");
 		}
+	}
+
+	private static void	plotHisto(int array[][], int length) {
+		int	histo[][];
+		int	index;
+
+		histo = new int[10][13];
+		fill2DArray(histo, 10, 13, -1);
+		for (int i = 0; i < 10; i++) {
+			index = findGreater(array, length);
+			if (index == -1) {
+				break ;
+			}
+			putInHisto(histo, array[index][0], array[index][1], i);
+			array[index][1] = -1;
+		}
+		printHisto(histo);
 	}
 
 	public static void	main(String args[]) {
@@ -78,9 +126,7 @@ class	Program {
 		String	str;
 		char	copy[];
 		int		occs[][];
-		int		histo[][];
 		int		length;
-		int		index;
 		
 		str = scanner.nextLine();
 		length = str.length();
@@ -90,18 +136,6 @@ class	Program {
 		for (char c : copy) {
 			putInArray(occs, c, length);
 		}
-		histo = new int[10][12];
-		fill2DArray(histo, 10, 12, -1);
-		for (int i = 0; i < 10; i++) {
-			index = findGreater(occs, length);
-			putInHisto(occs, occs[index][0], occs[index][1], i);
-			occs[index][1] = -1;
-		}
-		for (int i = 0; i < length; i++) {
-			if (occs[i][0] == -1) {
-				break ;
-			}
-			System.out.println((char) occs[i][0] + ": " + occs[i][1]);
-		}
+		plotHisto(occs, length);
 	}
 }
