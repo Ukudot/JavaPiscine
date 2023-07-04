@@ -2,7 +2,7 @@ import	java.util.Scanner;
 
 class	Program {
 	static final int	DEFAULT_VALUE = -1;
-	static int			max_occ;
+	static int			maxOcc;
 
 	private static void	putInArray(int array[][], char c, int length) {
 		int	i;
@@ -26,39 +26,39 @@ class	Program {
 	}
 
 	private static int	findGreater(int array[][], int length) {
-		int	max_ind;
+		int	maxInd;
 
-		max_ind = 0;
+		maxInd = 0;
 		for (int ind = 1; ind < length && array[ind][0] != -1; ind++) {
-			if (array[max_ind][1] < array[ind][1]) {
-					max_ind = ind;
+			if (array[maxInd][1] < array[ind][1]) {
+					maxInd = ind;
 			}
-			else if (array[max_ind][1] == array[ind][1]) {
-				if (array[max_ind][0] > array[ind][0]) {
-					max_ind = ind;
+			else if (array[maxInd][1] == array[ind][1]) {
+				if (array[maxInd][0] > array[ind][0]) {
+					maxInd = ind;
 				}
 			}
 		}
-		if (array[max_ind][1] == -1) {
+		if (array[maxInd][1] == -1) {
 			return (-1);
 		}
-		return (max_ind);
+		return (maxInd);
 	}
 
 	private static void	putInHisto(int histo[][], int elem, int occ, int row) {
 		int i;
-		int	n_ite;
+		int	nIte;
 
 		if (row == 0) {
-			max_occ = occ;
+			maxOcc = occ;
 			if (occ < 10) {
-				max_occ = 10;
+				maxOcc = 10;
 			}
 		}
 		i = 0;
-		n_ite = (int) ((float) occ / max_occ * 10);
+		nIte = (int) ((float) occ / maxOcc * 10);
 		histo[row][i] = elem;
-		for (i = 1; i < n_ite + 1 ; i++) {
+		for (i = 1; i < nIte + 1 ; i++) {
 			histo[row][i] = '#';
 		}
 		histo[row][i] = occ;

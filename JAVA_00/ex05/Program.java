@@ -1,13 +1,13 @@
 import	java.util.Scanner;
 
 class	Program {
+	static final String	DAYS[] = {"TU", "WE", "TH", "FR", "SA", "SU", "MO"};
+	static final String	LINE_SEPARETOR = ".";
 	static final int	SEPTEMBER_DAYS = 30;
 	static final int	MAX_STUDENT = 10;
 	static final int	MAX_LESSONS = 10;
 	static final int	MAX_LESSON_PD = 5;
-	static final String	LINE_SEPARETOR = ".";
 	static final int	DAYS_MAP[] = {1, -1, -1, -1, 2, 5, -1, 4, 6, -1, 3, -1, -1, -1, 0};
-	static final String	DAYS[] = {"TU", "WE", "TH", "FR", "SA", "SU", "MO"};
 
 	private static int	hash(char day[]) {
 		int	ind;
@@ -20,11 +20,11 @@ class	Program {
 	}
 
 	private static void	addToCalendar(int calendar[][], String hour, String day) {
-		int	hr_index = (int)hour.toCharArray()[0] - '1';
-		int	day_index = hash(day.toCharArray());
+		int	hrIndex = (int)hour.toCharArray()[0] - '1';
+		int	dayIndex = hash(day.toCharArray());
 
-		for (; day_index < 30; day_index += 7){
-			calendar[day_index][hr_index] = 1;
+		for (; dayIndex < 30; dayIndex += 7){
+			calendar[dayIndex][hrIndex] = 1;
 		}
 	}
 
@@ -78,9 +78,9 @@ class	Program {
 		System.out.println();
 	}
 
-	private static void	printDay(int calendar_day, int ind_std) {
-		if (calendar_day % 2 == 1) {
-			switch (calendar_day >> (ind_std * 2 + 1) & 3) {
+	private static void	printDay(int calendarDay, int indStd) {
+		if (calendarDay % 2 == 1) {
+			switch (calendarDay >> (indStd * 2 + 1) & 3) {
 				case 1:
 					printPadded("1", 10);
 					break ;
@@ -94,11 +94,11 @@ class	Program {
 		}
 	}
 
-	private static void printMonth(int calendar[][], String student, int ind_std) {
+	private static void printMonth(int calendar[][], String student, int indStd) {
 		printPadded(student, 10);
 		for (int i = 0; i < SEPTEMBER_DAYS; i++) {
 			for (int j = 0; j < MAX_LESSON_PD; j++) {
-				printDay(calendar[i][j], ind_std);
+				printDay(calendar[i][j], indStd);
 			}
 		}
 		System.out.println();
@@ -107,8 +107,8 @@ class	Program {
 	private static void print(int calendar[][], String students[]) {
 		printPadded("", 10);
 		printHeader(calendar);
-		for (int ind_std = 0; ind_std < MAX_STUDENT && students[ind_std] != null; ind_std++) {
-			printMonth(calendar, students[ind_std], ind_std);
+		for (int indStd = 0; indStd < MAX_STUDENT && students[indStd] != null; indStd++) {
+			printMonth(calendar, students[indStd], indStd);
 		}
 	}
 

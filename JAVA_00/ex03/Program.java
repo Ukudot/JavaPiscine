@@ -1,6 +1,9 @@
 import	java.util.Scanner;
 
 class	Program {
+	
+	static final int	N_GRADES = 5;	
+
 	private static long	pow(long base, long exp) {
 		if (exp == 0) {
 			return (1);
@@ -41,7 +44,7 @@ class	Program {
 				System.exit(-1);
 			}
 			min = 10;
-			for (int j = 0; j < 5; j++) {
+			for (int j = 0; j < N_GRADES; j++) {
 				num = scanner.nextInt();
 				if (num > 9 || num < 1) {
 					System.err.println("Invalid input");
