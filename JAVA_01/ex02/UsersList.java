@@ -4,7 +4,7 @@ interface	UsersList {
 	public User	searchUserByIndex(int ind) throws UserNotFoundException ;
 	public int	getNoUsers();
 
-	static public class 			UserNotFoundException extends Exception {
+	static public class 			UserNotFoundException extends RuntimeException {
 		public	UserNotFoundException(String errorMessage) {
 			super(errorMessage);
 		}
