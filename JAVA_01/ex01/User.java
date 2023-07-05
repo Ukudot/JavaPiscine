@@ -4,6 +4,7 @@ class	User {
 	private int		balance;
 
 	public User(int balance) {
+		this.identifier = UserIdsGenerator.getInstance().generateId();
 		if (balance < 0) {
 			System.out.println("Error: balance cannot be negative, it will be set at 0 by default");
 			this.balance = 0;
@@ -28,10 +29,6 @@ class	User {
 
 	public int		getBalance() {
 		return (this.balance);
-	}
-
-	public void		setID(int  identifier) {
-		this.identifier = identifier;
 	}
 
 	public void		setName(String name) {
