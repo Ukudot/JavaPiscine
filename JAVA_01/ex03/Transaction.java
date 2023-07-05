@@ -11,6 +11,7 @@ class	Transaction {
 	private User				sender;
 	private TransferCategory	tc;
 	private int					ta;
+	private Transaction			next;
 
 	public Transaction(User sender, User recipient, TransferCategory tc, int ta) {
 		this.id = UUID.randomUUID();
@@ -44,6 +45,14 @@ class	Transaction {
 	
 	public int				getTA() {
 		return (this.ta);
+	}
+
+	public Transaction		getNext() {
+		return (this.next);
+	}
+
+	public void				setNext(Transaction trs) {
+		this.next = trs;
 	}
 
 	@Override
