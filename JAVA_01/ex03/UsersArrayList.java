@@ -30,7 +30,7 @@ class UsersArrayList implements UsersList {
 		this.noUsers++;
 	}
 
-	public User				searchUserByID(int id) {
+	public User				searchUserByID(int id) throws UserNotFoundException {
 		for (int i = 0; i < this.noUsers; i++) {
 			if (this.users[i].getID() == id) {
 				return (this.users[i]);
@@ -39,7 +39,7 @@ class UsersArrayList implements UsersList {
 		throw new UserNotFoundException("User not found");
 	}
 
-	public User				searchUserByIndex(int ind) {
+	public User				searchUserByIndex(int ind) throws UserNotFoundException {
 		if (ind >= this.noUsers) {
 			throw new UserNotFoundException("User not found");
 		}
