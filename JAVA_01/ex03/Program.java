@@ -25,43 +25,45 @@ class	Program {
 			System.out.println(e);
 		}
 		System.out.println(users.getNoUsers());
-		users.searchUserByID(1).transactions.addTransaction(t1);
-		users.searchUserByID(1).transactions.addTransaction(t4);
-		users.searchUserByID(1).transactions.addTransaction(t5);
-		users.searchUserByID(2).transactions.addTransaction(t3);
-		users.searchUserByID(2).transactions.addTransaction(t2);
-		Transaction array[] = users.searchUserByID(1).transactions.toArray();
+		TransactionsList trs = users.searchUserByID(1).getTransactions();
+		trs.addTransaction(t1);
+		trs.addTransaction(t4);
+		trs.addTransaction(t5);
+		trs = users.searchUserByID(2).getTransactions();
+		trs.addTransaction(t3);
+		trs.addTransaction(t2);
+		Transaction array[] = users.searchUserByID(1).getTransactions().toArray();
 		System.out.println("Giovanni's Transactions: ");
 		for (Transaction tr : array) {
 			System.out.println(tr);
 		}
 
-		array = users.searchUserByID(2).transactions.toArray();
+		array = users.searchUserByID(2).getTransactions().toArray();
 		System.out.println("Marco's Transactions: ");
 		for (Transaction tr : array) {
 			System.out.println(tr);
 		}
-		array = users.searchUserByID(1).transactions.toArray();
+		array = users.searchUserByID(1).getTransactions().toArray();
 		try {
-			users.searchUserByID(1).transactions.removeTransaction(array[1].getID());
+			users.searchUserByID(1).getTransactions().removeTransaction(array[1].getID());
 		}
 		catch (Exception e) {
 			System.out.println(e);
 		}
-		array = users.searchUserByID(1).transactions.toArray();
+		array = users.searchUserByID(1).getTransactions().toArray();
 		System.out.println("Giovanni's after removing Transactions: ");
 		for (Transaction tr : array) {
 			System.out.println(tr);
 		}
 
-		array = users.searchUserByID(2).transactions.toArray();
+		array = users.searchUserByID(2).getTransactions().toArray();
 		try {
-			users.searchUserByID(1).transactions.removeTransaction(array[1].getID());
+			users.searchUserByID(1).getTransactions().removeTransaction(array[1].getID());
 		}
 		catch (Exception e) {
 			System.out.println(e);
 		}
-		array = users.searchUserByID(1).transactions.toArray();
+		array = users.searchUserByID(1).getTransactions().toArray();
 		System.out.println("Giovanni's after removing invalid Transactions: ");
 		for (Transaction tr : array) {
 			System.out.println(tr);

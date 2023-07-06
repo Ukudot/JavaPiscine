@@ -2,7 +2,7 @@ class	TransactionsService {
 	UsersList	users;
 
 	public	TransactionsService() {
-		this.users = new UsersArraList();
+		this.users = new UsersArrayList();
 	}
 
 	public void	addUser(User usr) {

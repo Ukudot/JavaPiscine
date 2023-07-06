@@ -1,8 +1,8 @@
 class	User {
-	private	int				identifier;
-	private String			name;
-	private int				balance;
-	public TransactionsList	transactions;
+	private	int					identifier;
+	private String				name;
+	private int					balance;
+	private TransactionsList	transactions;
 
 	public User(int balance) {
 		this.identifier = UserIdsGenerator.getInstance().generateId();
@@ -41,6 +41,9 @@ class	User {
 		this.balance = balance;
 	}
 
+	public TransactionsList	getTransactions() {
+		return (this.transactions);
+	}
 	@Override
 	public String toString() {
 		return ("Name: " + this.name + "\nID: " + this.identifier + "\nBalance: " + this.balance);
