@@ -11,8 +11,21 @@ class	TransactionsService {
 		this.users.addUser(usr);
 	}
 
+
 	public int	getUserBalance(int id) {
 		return (this.users.searchUserByID(id).getBalance());
+	}
+
+	public int	getUserBalance(int id, boolean print) {
+		User	user;
+		int		balance;
+
+		user = this.users.searchUserByID(id);
+		balance = user.getBalance();
+		if (print) {
+			System.out.println(user.getName() + " - " + balance);
+		}
+		return (balance);
 	}
 
 	public void	createTransaction(int senderID, int recipientID, int amount) {

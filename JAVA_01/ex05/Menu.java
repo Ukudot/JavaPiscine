@@ -1,13 +1,15 @@
-import	java.util.Scanner
+import	java.util.Scanner;
+import	java.util.UUID;
 
 class	Menu {
 	private TransactionsService	ts;
-	private boolean				devmode;
 	private Scanner				scanner;
+	private boolean				devmode;
 
-	public	Menu(boolean devmode) {
+	public	Menu(boolean devmode, Scanner scanner) {
 		this.devmode = devmode;
-		this.scanner = new Scanner(System.in);
+		this.scanner = scanner;
+		this.ts = new TransactionsService();
 	}
 
 	public void	showMenu() {
@@ -32,7 +34,7 @@ class	Menu {
 
 		System.out.println("Enter a user name and a balance");
 		System.out.print("-> ");
-		username = scanner.next(" ");
+		username = scanner.next();
 		balance = scanner.nextInt();
 		scanner.nextLine();
 		user = new User(username, balance);
@@ -48,7 +50,6 @@ class	Menu {
 		userID = scanner.nextInt();
 		scanner.nextLine();
 		this.ts.getUserBalance(userID, true);
-		System.out.println(e);
 	}
 
 	public void performTransfer() {
@@ -59,14 +60,14 @@ class	Menu {
 		System.out.println("Enter a sender ID, a recipient ID, and a transfer amount");
 		System.out.print("-> ");
 		senderID = scanner.nextInt();
-		reciprientID = scanner.nextInt();
-		transferAmountID = scanner.nextInt();
+		recipientID = scanner.nextInt();
+		transferAmount = scanner.nextInt();
 		scanner.nextLine();
 		this.ts.createTransaction(senderID, recipientID, transferAmount);
 		System.out.println("The transfer is completed");
 	}
 
-	public void	viewUserTransacions() {
+	public void	viewUserTransactions() {
 		Transaction	trs[];
 		int			userID;
 		User		sender;
@@ -77,6 +78,10 @@ class	Menu {
 		userID = scanner.nextInt();
 		scanner.nextLine();
 		trs = this.ts.getUserTransactions(userID);
+		if (trs == null) {
+			System.out.println("this user hasn't any transaction");
+			return ;
+		}
 		for (Transaction tr : trs) {
 			sender = tr.getSender();
 			recipient = tr.getRecipient();
@@ -90,16 +95,58 @@ class	Menu {
 	}
 
 	public void	removeUserTransaction() {
-		Transaction	tr;
+		Transaction	trs[];
 		int			userID;
 		String		sTransactionID;
+		UUID		transactionID;
 
 		System.out.println("Enter a user ID and a transfer ID");
 		System.out.print("-> ");
 		userID = scanner.nextInt();
 		sTransactionID = scanner.nextLine();
-		this.ts.removeUserTransaction(userID, UUID transactionID);
+		trs = this.ts.getUserTransactions(userID);
+		if (trs == null) {
+			throw new TransactionNotFoundException("transaction not found");
+		}
+		for (Transaction tr : trs) {
+			transactionID = tr.getID();
+			if (sTransactionID.equals(" " + transactionID.toString())) {
+				if (tr.getTC() == TransferCategory.DEBIT) {
+					System.out.print("Transfer to " + tr.getRecipient().getName() + "(id = " + tr.getRecipient().getID() + ") ");
+				} else {
+					System.out.print("Transfer from " + tr.getSender().getName() + "(id = " + tr.getSender().getID() + ") ");
+				}
+				System.out.println(tr.getTA() + " removed");
+				this.ts.removeUserTransaction(userID, transactionID);
+				return ;
+			}
+		}
+		throw new TransactionNotFoundException("transaction not found");
+	}
 
+	public void	checkTransferValidity() {
+		Transaction	trs[];
+		User		sender;
+		User		recipient;
 
+		System.out.println("Check results:");
+		trs = this.ts.checkValidity();
+		if (trs == null) {
+			System.out.println("there aren't unpaired transactions");
+			return ;
+		}
+		for (Transaction tr : trs) {
+			sender = tr.getSender();
+			recipient = tr.getRecipient();
+			if (recipient.getTransactions().findTransaction(tr.getID())) {
+				System.out.print(recipient.getName() + "(id = " + recipient.getID() + ") ");
+				System.out.print("has an unacknowledged transfer id = " + tr.getID());
+				System.out.print(" from " + sender.getName() + "(id = " + sender.getID() + ") for " + tr.getTA());
+			} else {
+				System.out.print(sender.getName() + "(id = " + sender.getID() + ") ");
+				System.out.print("has an unacknowledged transfer id = " + tr.getID());
+				System.out.println(" to " + recipient.getName() + "(id = " + recipient.getID() + ") for " + tr.getTA());
+			}
+		}
 	}
 }

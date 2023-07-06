@@ -1,59 +1,75 @@
-class	Program {
-	static public void	main(String args[]) {
-		TransactionsService	ts = new TransactionsService();
-		Transaction			trs[];
-		User				giovanni = new User("Giovanni", 1000);
-		User				marco = new User("Marco", 2000);
-		User				adistef = new User("Adistef", 3000);
-		User				afraccal = new User("Afraccal", 4000);
+import	java.util.Scanner;
 
-		ts.addUser(giovanni);
-		ts.addUser(marco);
-		ts.addUser(adistef);
-		ts.addUser(afraccal);
-		System.out.println("Before: ");
-		System.out.println("Marco's balance: " + ts.getUserBalance(marco.getID()));
-		System.out.println("Giovanni's balance: " + ts.getUserBalance(giovanni.getID()));
-		System.out.println("Adistef's balance: " + ts.getUserBalance(adistef.getID()));
-		System.out.println("Afraccal's balance: " + ts.getUserBalance(afraccal.getID()));
-		//ts.createTransaction(marco.getID(), giovanni.getID(), -100);
-		ts.createTransaction(marco.getID(), giovanni.getID(), 1000);
-		ts.createTransaction(adistef.getID(), afraccal.getID(), 1000);
-		ts.createTransaction(afraccal.getID(), marco.getID(), 2000);
-		System.out.println("------------------------------------------------");
-		System.out.println("After: ");
-		System.out.println("Marco's balance: " + ts.getUserBalance(marco.getID()));
-		System.out.println("Giovanni's balance: " + ts.getUserBalance(giovanni.getID()));
-		System.out.println("Adistef's balance: " + ts.getUserBalance(adistef.getID()));
-		System.out.println("Afraccal's balance: " + ts.getUserBalance(afraccal.getID()));
-		System.out.println("------------------------------------------------");
-		trs = ts.getUserTransactions(marco.getID());
-		System.out.println("Marco's transactions: ");
-		for (Transaction tr : trs) {
-			System.out.println(tr);
+class	Program {
+	static final int	MAX_COMMAND_DEV = 7;
+	static final int	MAX_COMMAND_PROD = 5;
+
+
+	static private void selectCommand(int select, int noCommand, Menu menu) {
+		if (noCommand == MAX_COMMAND_PROD && select == MAX_COMMAND_PROD) {
+			select = MAX_COMMAND_DEV;
 		}
-		System.out.println("------------------------------------------------");
-		System.out.println("check validity: ");
-		trs = ts.checkValidity();
-		for (Transaction tr : trs) {
-			System.out.println(tr);
+		switch (select) {
+			case 1:
+				menu.addUser();
+				break ;
+			case 2:
+				menu.viewUserBalance();
+				break ;
+			case 3:
+				menu.performTransfer();
+				break ;
+			case 4:
+				menu.viewUserTransactions();
+				break ;
+			case 5:
+				menu.removeUserTransaction();
+				break ;
+			case 6:
+				menu.checkTransferValidity();
+				break ;
+			default:
 		}
-		System.out.println("------------------------------------------------");
-		System.out.println("------------------------------------------------");
-		trs = ts.getUserTransactions(marco.getID());
-		ts.removeUserTransaction(marco.getID(), trs[1].getID());
-		//ts.removeUserTransaction(adistef.getID(), trs[1].getID());
-		trs = ts.getUserTransactions(marco.getID());
-		System.out.println("Marco's transactions after remove: ");
-		for (Transaction tr : trs) {
-			System.out.println(tr);
+	}
+
+	static public void	main(String args[]) {
+		Scanner scanner;
+		String	endline;
+		Menu	menu;
+		int		select;
+		int		noCommand;
+		boolean	passSelection;
+
+		scanner = new Scanner(System.in);
+		if (args.length != 0 && args[0].equals("--profile=dev")) {
+			menu = new Menu(true, scanner);
+			noCommand = MAX_COMMAND_DEV;
+		} else {
+			menu = new Menu(false, scanner);
+			noCommand = MAX_COMMAND_PROD;
 		}
-		System.out.println("------------------------------------------------");
-		System.out.println("check validity: ");
-		trs = ts.checkValidity();
-		for (Transaction tr : trs) {
-			System.out.println(tr);
+		select = 0;
+		while (select != noCommand) {
+			menu.showMenu();
+			System.out.print("-> ");
+			passSelection = false;
+			try {
+				select = scanner.nextInt();
+				passSelection = true;
+				endline = scanner.nextLine();
+				if (endline.length() != 0 || select < 1 || select > noCommand) {
+					throw new NonExistingCommandException("Command not valid");
+				}
+				selectCommand(select, noCommand, menu);
+				System.out.println("---------------------------------------------------------");
+			} catch (Exception e) {
+				System.out.println(e);
+				if (!passSelection) {
+					scanner.nextLine();
+				}
+				System.out.println("---------------------------------------------------------");
+			}
 		}
-		System.out.println("------------------------------------------------");
+		System.out.println("Bye bye <3");
 	}
 }

@@ -14,8 +14,7 @@ class	Transaction {
 		this.recipient = recipient;
 		this.tc = tc;
 		if (sender.getBalance() < ta) {
-			System.out.println("Error: insufficient credit, cannot complete the operation; the transfer amount is setted to 0 by default");
-			this.ta = ta;
+			throw new InvalidTransactionException("insufficient balance to complete the transaction");
 		}
 		else {
 			this.ta = ta;

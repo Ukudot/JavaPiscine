@@ -15,6 +15,18 @@ class	TransactionsService {
 		return (this.users.searchUserByID(id).getBalance());
 	}
 
+	public int	getUserBalance(int id, boolean print) {
+		User	user;
+		int		balance;
+
+		user = this.users.searchUserByID(id);
+		balance = user.getBalance();
+		if (print) {
+			System.out.println(user.getName() + " - " + balance);
+		}
+		return (balance);
+	}
+
 	public void	createTransaction(int senderID, int recipientID, int amount) {
 		User		sender;
 		User		recipient;
@@ -57,11 +69,13 @@ class	TransactionsService {
 		noUsers = this.users.getNoUsers();
 		for (int i = 0; i < noUsers; i++) {
 			transactionsArray = this.users.searchUserByIndex(i).getTransactions().toArray();
+			if (transactionsArray == null) {
+				break ;
+			}
 			for (Transaction tr : transactionsArray) {
 				if (!tr.getRecipient().getTransactions().findTransaction(tr.getID())) {
 					tmp.addTransaction(tr);
-				}
-				if (!tr.getSender().getTransactions().findTransaction(tr.getID())) {
+				} else if (!tr.getSender().getTransactions().findTransaction(tr.getID())) {
 					tmp.addTransaction(tr);
 				}
 			}
