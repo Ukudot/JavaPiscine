@@ -10,8 +10,8 @@ class	Transaction {
 
 	public Transaction(User sender, User recipient, TransferCategory tc, int ta) {
 		this.id = UUID.randomUUID();
-		this.recipient = recipient;
 		this.sender = sender;
+		this.recipient = recipient;
 		this.tc = tc;
 		if (sender.getBalance() < ta) {
 			System.out.println("Error: insufficient credit, cannot complete the operation; the transfer amount is setted to 0 by default");
@@ -21,6 +21,16 @@ class	Transaction {
 			this.ta = ta;
 		}
 	}
+
+	public Transaction(Transaction tr) {
+		this.id = tr.getID();
+		this.sender = tr.getSender();
+		this.recipient = tr.getRecipient();
+		this.tc = tr.getTC();
+		this.ta = tr.getTA();
+		this.next = tr.getNext();
+	}
+
 	
 	public UUID				getID() {
 		return (this.id);
@@ -44,6 +54,10 @@ class	Transaction {
 
 	public Transaction		getNext() {
 		return (this.next);
+	}
+
+	public void				setTC(TransferCategory tc) {
+		this.tc = tc;;
 	}
 
 	public void				setNext(Transaction trs) {

@@ -9,6 +9,19 @@ class TransactionsLinkedList implements TransactionsList {
 		this.size = 0;
 	}
 
+	public boolean	findTransaction(UUID id) {
+		Transaction	tmp;
+
+		tmp = this.head;
+		while (tmp != null) {
+			if (tmp.getID() == id) {
+				return (true);
+			}
+			tmp = tmp.getNext();
+		}
+		return (false);
+	}
+
 	@Override
 	public void	addTransaction(Transaction trs) {
 		if (this.head != null) {

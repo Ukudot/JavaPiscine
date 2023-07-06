@@ -36,6 +36,10 @@ class	User {
 	}
 
 	public void		setBalance(int balance) {
+		if (balance < 0) {
+			System.out.println("Error: balance cannot be negative");
+			return ;
+		}
 		this.balance = balance;
 	}
 

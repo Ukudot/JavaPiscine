@@ -18,6 +18,7 @@ class UsersArrayList implements UsersList {
 		this.users = new User[this.size];
 	}
 
+	@Override
 	public void				addUser(User user) {
 		int	newSize;
 
@@ -30,6 +31,7 @@ class UsersArrayList implements UsersList {
 		this.noUsers++;
 	}
 
+	@Override
 	public User				searchUserByID(int id) throws UserNotFoundException {
 		for (int i = 0; i < this.noUsers; i++) {
 			if (this.users[i].getID() == id) {
@@ -39,6 +41,7 @@ class UsersArrayList implements UsersList {
 		throw new UserNotFoundException("User not found");
 	}
 
+	@Override
 	public User				searchUserByIndex(int ind) throws UserNotFoundException {
 		if (ind >= this.noUsers) {
 			throw new UserNotFoundException("User not found");
@@ -46,6 +49,7 @@ class UsersArrayList implements UsersList {
 		return (this.users[ind]);
 	}
 
+	@Override
 	public int				getNoUsers() {
 		return (this.noUsers);
 	}
