@@ -1,0 +1,4 @@
+enum		TransferCategory {
+	DEBIT,
+	CREDIT
+}
