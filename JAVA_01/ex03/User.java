@@ -1,10 +1,12 @@
 class	User {
-	private	int		identifier;
-	private String	name;
-	private int		balance;
+	private	int				identifier;
+	private String			name;
+	private int				balance;
+	public TransactionsList	transactions;
 
 	public User(int balance) {
 		this.identifier = UserIdsGenerator.getInstance().generateId();
+		this.transactions = new TransactionsLinkedList();
 		if (balance < 0) {
 			System.out.println("Error: balance cannot be negative, it will be set at 0 by default");
 			this.balance = 0;

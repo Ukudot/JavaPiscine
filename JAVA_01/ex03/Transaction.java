@@ -1,11 +1,6 @@
 import java.util.UUID;
 
 class	Transaction {
-	static enum		TransferCategory {
-		DEBIT,
-		CREDIT
-	}
-
 	private UUID				id;
 	private User				recipient;
 	private User				sender;
@@ -58,6 +53,6 @@ class	Transaction {
 	@Override
 	public String	toString() {
 		return ("Transacion id " + this.id.toString() + ", type " + this.tc + ", amount " + this.ta
-			+ "\nSender:\n" + this.sender + "\nRecipient:\n" + this.recipient);
+			+ "\n\tSender: " + this.sender.getName() + "\n\tRecipient: " + this.recipient.getName());
 	}
 }

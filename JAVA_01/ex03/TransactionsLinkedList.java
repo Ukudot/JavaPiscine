@@ -25,11 +25,13 @@ class TransactionsLinkedList implements TransactionsList {
 		tmp = this.head;
 		if (tmp.getID() == id) {
 			this.head = tmp.getNext();
+			this.size--;
 			return ;
 		}
 		while (tmp.getNext() != null) {
 			if (tmp.getNext().getID() == id) {
 				tmp.setNext(tmp.getNext().getNext());
+				this.size--;
 				return ;
 			}
 			tmp = tmp.getNext();
