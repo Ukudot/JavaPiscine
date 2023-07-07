@@ -17,11 +17,13 @@ class	Transaction {
 		this.recipient = recipient;
 		this.sender = sender;
 		this.tc = tc;
-		if (sender.getBalance() < ta) {
+		if ((tc == TransferCategory.CREDIT && ta < 0) || (tc == TransferCategory.DEBIT && ta > 0)) {
+			System.out.println("Error: invalid amount for this type of transaction; the transfer amount is setted to 0 by default");
+			this.ta = 0;
+		} else if (sender.getBalance() < ta) {
 			System.out.println("Error: insufficient credit, cannot complete the operation; the transfer amount is setted to 0 by default");
-			this.ta = ta;
-		}
-		else {
+			this.ta = 0;
+		} else {
 			this.ta = ta;
 		}
 	}

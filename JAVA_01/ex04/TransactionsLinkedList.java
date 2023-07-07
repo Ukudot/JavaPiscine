@@ -57,6 +57,9 @@ class TransactionsLinkedList implements TransactionsList {
 		Transaction	array[];
 		Transaction tmp;
 
+		if (this.size == 0) {
+			return (null);
+		}
 		array = new Transaction[this.size];
 		tmp = this.head;
 		for (int i = 0; i < this.size; i++) {

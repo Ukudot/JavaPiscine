@@ -3,6 +3,7 @@ class	Program {
 		User		sen = new User("Giovanni", 1000);
 		User		rec = new User("Marco", 1000);
 		Transaction	trans = new Transaction(sen, rec, Transaction.TransferCategory.DEBIT, 500);
+		trans = new Transaction(sen, rec, Transaction.TransferCategory.DEBIT, -500);
 
 		System.out.println(trans);
 

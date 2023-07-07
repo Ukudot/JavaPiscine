@@ -11,14 +11,9 @@ class	Program {
 		users.addUser(adistef);
 		users.addUser(afraccal);
 		users.print();
-		try {
-			System.out.println(users.searchUserByID(1));
-			System.out.println(users.searchUserByIndex(1));
-			System.out.println(users.searchUserByID(5));
-		}
-		catch (Exception e) {
-			System.out.println(e);
-		}
+		System.out.println(users.searchUserByID(1));
+		System.out.println(users.searchUserByIndex(1));
 		System.out.println(users.getNoUsers());
+		System.out.println(users.searchUserByID(5));
 	}
 }

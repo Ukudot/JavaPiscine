@@ -36,7 +36,10 @@ class	Menu {
 		System.out.print("-> ");
 		username = scanner.next();
 		balance = scanner.nextInt();
-		scanner.nextLine();
+		line = scanner.nextLine();
+		if (!line.equals("")) {
+			throw new NonExistingCommandException("Wrong input");
+		}
 		user = new User(username, balance);
 		ts.addUser(user);
 		System.out.println("User with id = " + user.getID()  + " is added");
@@ -44,11 +47,15 @@ class	Menu {
 
 	public void viewUserBalance() {
 		int		userID;
+		String	line;
 
 		System.out.println("Enter a user ID");
 		System.out.print("-> ");
 		userID = scanner.nextInt();
-		scanner.nextLine();
+		line = scanner.nextLine();
+		if (!line.equals("")) {
+			throw new NonExistingCommandException("Wrong input");
+		}
 		this.ts.getUserBalance(userID, true);
 	}
 
@@ -56,13 +63,17 @@ class	Menu {
 		int		senderID;
 		int		recipientID;
 		int		transferAmount;
+		String	line;
 
 		System.out.println("Enter a sender ID, a recipient ID, and a transfer amount");
 		System.out.print("-> ");
 		senderID = scanner.nextInt();
 		recipientID = scanner.nextInt();
 		transferAmount = scanner.nextInt();
-		scanner.nextLine();
+		line = scanner.nextLine();
+		if (!line.equals("")) {
+			throw new NonExistingCommandException("Wrong input");
+		}
 		this.ts.createTransaction(senderID, recipientID, transferAmount);
 		System.out.println("The transfer is completed");
 	}
@@ -72,11 +83,15 @@ class	Menu {
 		int			userID;
 		User		sender;
 		User		recipient;
+		String		line;
 
 		System.out.println("Enter a user ID");
 		System.out.print("-> ");
 		userID = scanner.nextInt();
-		scanner.nextLine();
+		line = scanner.nextLine();
+		if (!line.equals("")) {
+			throw new NonExistingCommandException("Wrong input");
+		}
 		trs = this.ts.getUserTransactions(userID);
 		if (trs == null) {
 			System.out.println("this user hasn't any transaction");
@@ -87,10 +102,11 @@ class	Menu {
 			recipient = tr.getRecipient();
 			if (tr.getTC() == TransferCategory.DEBIT) {
 				System.out.print("To " + recipient.getName() + "(id = " + recipient.getID() + ") -");
+				System.out.println((-tr.getTA()) + " with id = " + tr.getID());
 			} else {
 				System.out.print("From " + sender.getName() + "(id = " + sender.getID() + ") -");
+				System.out.println(tr.getTA() + " with id = " + tr.getID());
 			}
-			System.out.println(tr.getTA() + " with id = " + tr.getID());
 		}
 	}
 
@@ -113,10 +129,11 @@ class	Menu {
 			if (sTransactionID.equals(" " + transactionID.toString())) {
 				if (tr.getTC() == TransferCategory.DEBIT) {
 					System.out.print("Transfer to " + tr.getRecipient().getName() + "(id = " + tr.getRecipient().getID() + ") ");
+					System.out.println((-tr.getTA()) + " removed");
 				} else {
 					System.out.print("Transfer from " + tr.getSender().getName() + "(id = " + tr.getSender().getID() + ") ");
+					System.out.println(tr.getTA() + " removed");
 				}
-				System.out.println(tr.getTA() + " removed");
 				this.ts.removeUserTransaction(userID, transactionID);
 				return ;
 			}
@@ -141,11 +158,21 @@ class	Menu {
 			if (recipient.getTransactions().findTransaction(tr.getID())) {
 				System.out.print(recipient.getName() + "(id = " + recipient.getID() + ") ");
 				System.out.print("has an unacknowledged transfer id = " + tr.getID());
-				System.out.print(" from " + sender.getName() + "(id = " + sender.getID() + ") for " + tr.getTA());
+				System.out.print(" from " + sender.getName() + "(id = " + sender.getID() + ") for ");
+				if (tr.getTC() == TransferCategory.DEBIT) {
+					System.out.println((-tr.getTA()));
+				} else {
+					System.out.println(tr.getTA());
+				}
 			} else {
 				System.out.print(sender.getName() + "(id = " + sender.getID() + ") ");
 				System.out.print("has an unacknowledged transfer id = " + tr.getID());
-				System.out.println(" to " + recipient.getName() + "(id = " + recipient.getID() + ") for " + tr.getTA());
+				System.out.print(" to " + recipient.getName() + "(id = " + recipient.getID() + ") for ");
+				if (tr.getTC() == TransferCategory.DEBIT) {
+					System.out.println((-tr.getTA()));
+				} else {
+					System.out.println(tr.getTA());
+				}
 			}
 		}
 	}

@@ -37,7 +37,7 @@ class	TransactionsService {
 		}
 		sender = this.users.searchUserByID(senderID);
 		recipient = this.users.searchUserByID(recipientID);
-		tr = new Transaction(sender, recipient, TransferCategory.DEBIT, amount);
+		tr = new Transaction(sender, recipient, TransferCategory.DEBIT, -amount);
 		sender.getTransactions().addTransaction(tr);
 		tr = new Transaction(tr);
 		tr.setTC(TransferCategory.CREDIT);
