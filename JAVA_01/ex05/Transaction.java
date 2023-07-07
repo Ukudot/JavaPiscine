@@ -15,7 +15,7 @@ class	Transaction {
 		this.tc = tc;
 		if ((tc == TransferCategory.CREDIT && ta < 0) || (tc == TransferCategory.DEBIT && ta > 0)) {
 			throw new InvalidTransactionException("Invalid amount for this type of transaction");
-		} else if (sender.getBalance() < ta) {
+		} else if (sender.getBalance() < -ta) {
 			throw new InvalidTransactionException("insufficient balance to complete the transaction");
 		}
 		else {

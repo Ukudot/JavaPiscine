@@ -70,7 +70,7 @@ class	TransactionsService {
 		for (int i = 0; i < noUsers; i++) {
 			transactionsArray = this.users.searchUserByIndex(i).getTransactions().toArray();
 			if (transactionsArray == null) {
-				break ;
+				continue ;
 			}
 			for (Transaction tr : transactionsArray) {
 				if (!tr.getRecipient().getTransactions().findTransaction(tr.getID())) {

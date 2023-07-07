@@ -101,10 +101,10 @@ class	Menu {
 			sender = tr.getSender();
 			recipient = tr.getRecipient();
 			if (tr.getTC() == TransferCategory.DEBIT) {
-				System.out.print("To " + recipient.getName() + "(id = " + recipient.getID() + ") -");
-				System.out.println((-tr.getTA()) + " with id = " + tr.getID());
+				System.out.print("To " + recipient.getName() + "(id = " + recipient.getID() + ") ");
+				System.out.println((tr.getTA()) + " with id = " + tr.getID());
 			} else {
-				System.out.print("From " + sender.getName() + "(id = " + sender.getID() + ") -");
+				System.out.print("From " + sender.getName() + "(id = " + sender.getID() + ") ");
 				System.out.println(tr.getTA() + " with id = " + tr.getID());
 			}
 		}
@@ -129,7 +129,7 @@ class	Menu {
 			if (sTransactionID.equals(" " + transactionID.toString())) {
 				if (tr.getTC() == TransferCategory.DEBIT) {
 					System.out.print("Transfer to " + tr.getRecipient().getName() + "(id = " + tr.getRecipient().getID() + ") ");
-					System.out.println((-tr.getTA()) + " removed");
+					System.out.println((tr.getTA()) + " removed");
 				} else {
 					System.out.print("Transfer from " + tr.getSender().getName() + "(id = " + tr.getSender().getID() + ") ");
 					System.out.println(tr.getTA() + " removed");
@@ -158,21 +158,11 @@ class	Menu {
 			if (recipient.getTransactions().findTransaction(tr.getID())) {
 				System.out.print(recipient.getName() + "(id = " + recipient.getID() + ") ");
 				System.out.print("has an unacknowledged transfer id = " + tr.getID());
-				System.out.print(" from " + sender.getName() + "(id = " + sender.getID() + ") for ");
-				if (tr.getTC() == TransferCategory.DEBIT) {
-					System.out.println((-tr.getTA()));
-				} else {
-					System.out.println(tr.getTA());
-				}
+				System.out.println(" from " + sender.getName() + "(id = " + sender.getID() + ") for " + tr.getTA());
 			} else {
 				System.out.print(sender.getName() + "(id = " + sender.getID() + ") ");
 				System.out.print("has an unacknowledged transfer id = " + tr.getID());
-				System.out.print(" to " + recipient.getName() + "(id = " + recipient.getID() + ") for ");
-				if (tr.getTC() == TransferCategory.DEBIT) {
-					System.out.println((-tr.getTA()));
-				} else {
-					System.out.println(tr.getTA());
-				}
+				System.out.println(" to " + recipient.getName() + "(id = " + recipient.getID() + ") for " + tr.getTA());
 			}
 		}
 	}
