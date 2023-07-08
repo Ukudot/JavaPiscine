@@ -35,6 +35,9 @@ class	TransactionsService {
 		if (amount < 0) {
 			throw new InvalidOperationException("Cannot pass a negative amount");
 		}
+		if (senderID == recipientID) {
+			throw new InvalidOperationException("Sender and recipient have the same id");
+		}
 		sender = this.users.searchUserByID(senderID);
 		recipient = this.users.searchUserByID(recipientID);
 		tr = new Transaction(sender, recipient, TransferCategory.DEBIT, -amount);
