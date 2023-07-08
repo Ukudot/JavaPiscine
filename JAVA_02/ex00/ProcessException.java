@@ -1,5 +1,5 @@
 class	ProcessException extends RuntimeException {
-	public	ProcessException(errorMessage) {
+	public	ProcessException(String errorMessage) {
 		super(errorMessage);
 	}
 }

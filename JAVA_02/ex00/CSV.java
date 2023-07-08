@@ -9,14 +9,14 @@ class	CSV {
 		this.filename = filename;
 	}
 
-	public void	openCSV() throws FileNotFoundException {
+	public void	open() throws FileNotFoundException {
 		this.file = new FileInputStream(filename);
 	}
 
-	public List<byte[]>	readLineCSV() {
-		List<byte[]>	line;
-		List<Byte>		bytesList;
-		byte			bytes[];
+	public List<int[]>	readLine() throws IOException {
+		List<int[]>		line;
+		List<Integer>	bytesList;
+		int				bytes[];
 		int				size;
 		int				read;
 
@@ -24,15 +24,16 @@ class	CSV {
 			return (null);
 		}
 		read = 0;
-		line = new ArrayList<byte[]>();
+		line = new ArrayList<int[]>();
 		while (read != '\n' && this.file.available() != 0) {
-			bytesList = new ArrayList<Byte>();
+			bytesList = new ArrayList<Integer>();
+			read = file.read();
 			while (read != ',' && read != '\n' && this.file.available() != 0) {
+				bytesList.add(read);
 				read = file.read();
-				bytesList.add((byte) read);
 			}
 			size = bytesList.size();
-			bytes = new byte[size];
+			bytes = new int[size];
 			for (int i = 0; i < size; i++) {
 				bytes[i] = bytesList.get(i);
 			}
@@ -41,7 +42,7 @@ class	CSV {
 		return (line);
 	}
 
-	public void	closeCSV() {
+	public void	close() throws IOException {
 		this.file.close();
 	}
 }
