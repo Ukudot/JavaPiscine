@@ -120,6 +120,9 @@ class	Dictionary {
 		vectorB = createOccVector(this.fileB.getFile());
 		num = scalarProd((Vector<Integer>) vectorA, (Vector<Integer>) vectorB);
 		den = calculateMod((Vector<Integer>) vectorA) * calculateMod((Vector<Integer>) vectorB);
+		if (den == 0.0) {
+			return (0);
+		}
 		return (num / den);
 	}
 

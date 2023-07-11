@@ -10,7 +10,7 @@ class	Program {
 			dict = new Dictionary(args[0], args[1]);
 			dict.loadFiles();
 			dict.createDictionary();
-			dict.saveDictionary("result.txt");
+			dict.saveDictionary("dictionary.txt");
 			System.out.printf("Similarity: %.3f\n", dict.calculateSimilarity());
 		} catch (Exception e) {
 			System.out.println(e);

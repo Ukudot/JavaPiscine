@@ -36,7 +36,7 @@ class	MyFile {
 			this.in = new BufferedReader(new FileReader(this.filename));
 			line = this.in.readLine();
 			while (line != null) {
-				this.file.add(myReplace(line, ",.;:?!()[]{}", " ").toLowerCase().split("\\s+"));
+				this.file.add(myReplace(line, ",.;:?!()[]{}\"\'", " ").toLowerCase().split("\\s+"));
 				line = this.in.readLine();
 			}
 			this.in.close();

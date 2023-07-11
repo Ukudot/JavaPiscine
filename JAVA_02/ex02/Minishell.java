@@ -53,6 +53,7 @@ class	Minishell {
 		}
 		this.file = tmp;
 		this.path = this.file.getAbsolutePath();
+		System.out.println(tmp.getAbsolutePath());
 	}
 
 	public void	moveFile(String[] cmd) throws InvalidCommandException, InvalidFileException, InvalidDirectoryException {
@@ -72,7 +73,6 @@ class	Minishell {
 		} else if (!tmp.getParentFile().isDirectory()) {
 			throw new InvalidDirectoryException("directory not found");	
 		}
-		System.out.println(tmp.getAbsolutePath());
 		tmpFile.renameTo(tmp);
 	}
 }
