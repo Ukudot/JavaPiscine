@@ -1,0 +1,6 @@
+MIDI
+MP3
+GZ
+GIF
+undefined
+BMP

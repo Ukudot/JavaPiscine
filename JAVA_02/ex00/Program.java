@@ -23,7 +23,6 @@ class	Program {
 		if (!signatures.isLoaded()) {
 			System.exit(-1);
 		}
-		signatures.printMap();
 		try {
 			System.out.print("-> ");
 			line = scanner.nextLine();
