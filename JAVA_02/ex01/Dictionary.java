@@ -12,6 +12,9 @@ class	Dictionary {
 	private	void	putInDictionary(Vector<String[]> content) {
 		for (String[] line : content) {
 			for (String word : line) {
+				if (word.equals("")) {
+					continue ;
+				}
 				if (this.dictionary.containsKey(word)) {
 					this.dictionary.put(word, this.dictionary.get(word) + 1);
 				} else {
