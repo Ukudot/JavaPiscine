@@ -11,7 +11,7 @@ class	Program {
 			dict.loadFiles();
 			dict.createDictionary();
 			dict.saveDictionary("result.txt");
-			System.out.printf("Similarity: %.3f", dict.calculateSimilarity());
+			System.out.printf("Similarity: %.3f\n", dict.calculateSimilarity());
 		} catch (Exception e) {
 			System.out.println(e);
 			System.exit(-1);
