@@ -14,8 +14,7 @@ class	Program {
 
 	public static void	main(String args[]) {
 		Thread	thread1, thread2;
-		Hen		hen;
-		Egg		egg;
+		Object	lock;
 		int		count;
 
 		if (args.length != 1) {
@@ -30,8 +29,9 @@ class	Program {
 			System.exit(-1);
 		}
 
-		thread1 = new Thread(new Hen(count));
-		thread2 = new Thread(new Egg(count));
+		lock = new Object();
+		thread1 = new Thread(new Egg(count, lock));
+		thread2 = new Thread(new Hen(count, lock));
 		thread2.start();
 		thread1.start();
 		try {
@@ -40,9 +40,6 @@ class	Program {
 		} catch (InterruptedException e) {
 			System.out.println("Error: thread has been interrupted");
 			System.exit(-1);
-		}
-		for (int i = 0; i < count; i++) {
-			System.out.println("Human");
 		}
 	}
 }
