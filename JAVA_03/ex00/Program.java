@@ -5,9 +5,9 @@ class	Program {
 		int		num;
 
 		inputs = input.split("=");
-		if (inputs.length != 2) {
+		if (inputs.length != 2 || !inputs[0].equals("--count")) {
 			System.out.println("Usage error: java Program --count=<number of print>");
-			return (null);
+			System.exit(-1);
 		}
 		return (inputs[1]);
 	}
