@@ -43,11 +43,11 @@ class	Program {
 			System.out.println("Error: not a number");
 			System.exit(-1);
 		}
-		if (arraySize > MAX_ELEMENTS) {
-			System.out.println("Error: number of elements cannot be greater than " + MAX_ELEMENTS);
+		if (arraySize > MAX_ELEMENTS || arraySize <= 0) {
+			System.out.println("Error: invalid number of elements");
 			System.exit(-1);
-		} else if (threadsCount > arraySize) {
-			System.out.println("Error: threads cannot be greater than elements");
+		} else if (threadsCount > arraySize || threadsCount <= 0) {
+			System.out.println("Error: invlaid number of threads");
 			System.exit(-1);
 		}
 		randArray = new RandomArray(arraySize);
@@ -58,8 +58,14 @@ class	Program {
 		}
 		System.out.println("sum: " + sum);
 		threadsPool = new ThreadsPool(threadsCount, randArray);
+		threadsPool.prepareThreads();
 		threadsPool.start();
-		threadsPool.wait();
-		Sytem.out.println("Sum by threads: " + threadsPool.getSum());
+		try {
+			threadsPool.join();
+		} catch (InterruptedException e) {
+			System.out.println("Thread interrupted");
+			System.exit(-1);
+		}
+		System.out.println("Sum by threads: " + threadsPool.getSum());
 	}
 }
