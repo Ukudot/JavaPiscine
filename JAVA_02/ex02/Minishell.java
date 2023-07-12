@@ -19,18 +19,25 @@ class	Minishell {
 
 	private String	shrinkPath(String oldPath) {
 		String			newPath;
+		File			root[];
+		File			tmp;
 
+		tmp = new File(oldPath);
+		root = tmp.listRoots();
 		newPath = oldPath;
 		while (newPath.contains("/./")) {
 			newPath = newPath.replaceAll("/\\./", "/");
 		}
 		while (newPath.contains("/..")) {
-			newPath = newPath.replaceAll("/\\w+/\\.\\.", "");
-			System.out.println(newPath);
+			if (!newPath.replaceAll("/\\w+/\\.\\.", "").equals(newPath)) {
+				newPath = newPath.replaceAll("/\\w+/\\.\\.", "");
+			} else {
+				newPath = newPath.replaceAll("/\\.\\.", "");	
+			}
 		}
 		newPath = newPath.replaceAll("/\\.", "");
 		if (newPath.equals("")) {
-			return ("/nfs");
+			return (root[0].getAbsolutePath());
 		}
 		return (newPath);
 	}
