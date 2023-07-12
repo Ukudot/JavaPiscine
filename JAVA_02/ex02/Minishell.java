@@ -1,4 +1,5 @@
 import	java.io.*;
+import	java.util.*;
 
 class	Minishell {
 	private static int	KILOBYTE = 1024;
@@ -14,6 +15,24 @@ class	Minishell {
 			tmp = new File(this.file.getAbsolutePath() + "/" + cmd);
 		}
 		return (tmp);
+	}
+
+	private String	shrinkPath(String oldPath) {
+		String			newPath;
+
+		newPath = oldPath;
+		while (newPath.contains("/./")) {
+			newPath = newPath.replaceAll("/\\./", "/");
+		}
+		while (newPath.contains("/..")) {
+			newPath = newPath.replaceAll("/\\w+/\\.\\.", "");
+			System.out.println(newPath);
+		}
+		newPath = newPath.replaceAll("/\\.", "");
+		if (newPath.equals("")) {
+			return ("/nfs");
+		}
+		return (newPath);
 	}
 
 	public	Minishell(String path) throws FileNotExistException {
@@ -51,6 +70,7 @@ class	Minishell {
 		if (!tmp.exists() || !tmp.isDirectory()) {
 			throw new InvalidDirectoryException("directory not found");
 		}
+		tmp = new File(this.shrinkPath(tmp.getAbsolutePath()));
 		this.file = tmp;
 		this.path = this.file.getAbsolutePath();
 		System.out.println(tmp.getAbsolutePath());
