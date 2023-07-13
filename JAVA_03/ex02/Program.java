@@ -6,7 +6,7 @@ class	Program {
 
 		inputs = input.split("=");
 		if (inputs.length != 2 || !inputs[0].equals("--arraySize")) {
-			System.out.println("Usage error: java Program --arraySize=<number of element> --threadsCoount=<number of threads>");
+			System.out.println("Usage error: java Program --arraySize=<number of element> --threadsCount=<number of threads>");
 			System.exit(-1);
 		}
 		return (inputs[1]);
@@ -17,7 +17,7 @@ class	Program {
 
 		inputs = input.split("=");
 		if (inputs.length != 2 || !inputs[0].equals("--threadsCount")) {
-			System.out.println("Usage error: java Program --arraySize=<number of element> --threadsCoount=<number of threads>");
+			System.out.println("Usage error: java Program --arraySize=<number of element> --threadsCount=<number of threads>");
 			System.exit(-1);
 		}
 		return (inputs[1]);
@@ -31,7 +31,7 @@ class	Program {
 		ThreadsPool	threadsPool;
 
 		if (args.length != 2) {
-			System.out.println("Usage error: java Program --arraySize=<number of element> --threadsCoount=<number of threads>");
+			System.out.println("Usage error: java Program --arraySize=<number of element> --threadsCount=<number of threads>");
 			System.exit(-1);
 		}
 		arraySize = 0;
@@ -47,7 +47,7 @@ class	Program {
 			System.out.println("Error: invalid number of elements");
 			System.exit(-1);
 		} else if (threadsCount > arraySize || threadsCount <= 0) {
-			System.out.println("Error: invlaid number of threads");
+			System.out.println("Error: invalid number of threads");
 			System.exit(-1);
 		}
 		randArray = new RandomArray(arraySize);
