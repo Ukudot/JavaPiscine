@@ -9,8 +9,8 @@ class	ThreadsPool	{
 	public	ThreadsPool(int	threadsCount, RandomArray randArray) {
 		this.threadsCount = threadsCount;
 		this.randArray = randArray;
-		this.threadsArray = new ArrayList();
-		this.sums = new ArrayList();
+		this.threadsArray = new ArrayList<Thread>();
+		this.sums = new ArrayList<Integer>();
 	}
 
 	public void	prepareThreads() {
