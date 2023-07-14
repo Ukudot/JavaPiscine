@@ -1,6 +1,6 @@
 class	App {
 
-	private static final String	FILE = "./src/resources/it.bmp";
+	private static final String	FILE = "./target/resources/it.bmp";
 
 	private static Image	takeInput(String args[]) throws InvalidInputException {
 		Image	image = null;

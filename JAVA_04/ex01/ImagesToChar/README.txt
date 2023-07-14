@@ -16,7 +16,8 @@ black_char: Character used to represent black color
 
 * CREATE JAR *
 ~You have to compile before launch the next command~
-jar -cfmv target/images-to-chars-printer.jar ./src/manifest.txt -C target/edu.42Roma.printer . -C src/resources .
+cp -r src/resources target
+jar -cfmv target/images-to-chars-printer.jar ./src/manifest.txt -C target/edu.42Roma.printer . -C target/resources .
 
 * EXECUTE FROM JAR *
 java -jar target/images-to-chars-printer.jar <white_char> <black_char>
