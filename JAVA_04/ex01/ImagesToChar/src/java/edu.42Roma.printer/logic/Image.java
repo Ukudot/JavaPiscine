@@ -1,3 +1,4 @@
+package	logic;
 import	java.util.List;
 import	java.util.Vector;
 import	java.io.File;
@@ -6,7 +7,7 @@ import	java.awt.image.BufferedImage;
 import	java.awt.Color;
 import	javax.imageio.ImageIO;
 
-class	Image {
+public class	Image {
 	private	BufferedImage	img;
 	private char			white;
 	private char			black;

@@ -1,4 +1,7 @@
-class	App {
+package	app;
+import	logic.*;
+
+public class	App {
 
 	private static final String	FILE = "./target/resources/it.bmp";
 
