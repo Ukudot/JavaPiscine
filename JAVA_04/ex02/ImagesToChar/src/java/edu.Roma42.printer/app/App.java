@@ -1,5 +1,5 @@
-package	app;
-import	logic.*;
+package	edu.Roma42.printer.app;
+import	edu.Roma42.printer.logic.*;
 import	java.awt.Color;
 import	com.beust.jcommander.JCommander;
 import	com.beust.jcommander.Parameter;

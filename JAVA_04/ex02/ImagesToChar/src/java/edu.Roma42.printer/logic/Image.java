@@ -1,4 +1,4 @@
-package	logic;
+package	edu.Roma42.printer.logic;
 import	java.util.List;
 import	java.util.Vector;
 import	java.io.File;
