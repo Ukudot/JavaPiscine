@@ -6,17 +6,30 @@ import	java.io.IOException;
 import	java.awt.image.BufferedImage;
 import	java.awt.Color;
 import	javax.imageio.ImageIO;
+import	com.diogonunes.jcolor.Attribute;
+import	com.diogonunes.jcolor.Ansi;
 
 public class	Image {
 	private	BufferedImage	img;
-	private char			white;
-	private char			black;
+	private int				white[];
+	private int				black[];
 	private int				height;
 	private int				width;
 
-	public	Image(char white, char black, String path) throws InvalidInputException {
-		this.white = white;
-		this.black = black;
+	public	Image(String white, String black, String path) throws InvalidInputException, IllegalAccessException, NoSuchFieldException, ClassNotFoundException {
+		Color	wh;
+		Color	bl;
+
+		wh = (Color) Class.forName("java.awt.Color").getField(white).get(null);
+		bl = (Color) Class.forName("java.awt.Color").getField(black).get(null);
+		this.white = new int[3];
+		this.black = new int[3];
+		this.white[0] = wh.getRed();
+		this.white[1] = wh.getGreen();
+		this.white[2] = wh.getBlue();
+		this.black[0] = bl.getRed();
+		this.black[1] = bl.getGreen();
+		this.black[2] = bl.getBlue();
 		this.img = null;
 		try {
 			this.img = ImageIO.read(new File(path));
@@ -34,9 +47,9 @@ public class	Image {
 		for (int i = 0; i < this.height; i++) {
 			for (int j = 0; j < this.width; j++) {
 				if (this.img.getRGB(j, i) == Color.BLACK.getRGB()) {
-					System.out.print(this.black);
+					System.out.print(Ansi.colorize(" ", Attribute.BACK_COLOR(this.black[0], this.black[1], this.black[2])));
 				} else {
-					System.out.print(this.white);
+					System.out.print(Ansi.colorize(" ", Attribute.BACK_COLOR(this.white[0], this.white[1], this.white[2])));
 				}
 			}
 			System.out.println();
