@@ -1,3 +1,6 @@
+package	app;
+import	logic.*;
+
 class	App {
 
 	private static Image	takeInput(String args[]) throws InvalidInputException {

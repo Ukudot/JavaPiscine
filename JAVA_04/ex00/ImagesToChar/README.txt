@@ -5,10 +5,10 @@ This is a simple program to print with ASCII a BMP black and white image
 The only files accepted are black and white binary BMP
 
 * COMPILATION *
-javac -d ./target/edu.42Roma.printer src/java/edu.42Roma.printer/app/App.java src/java/edu.42Roma.printer/logic/*.java
+javac --release 8 -d ./target/edu.42Roma.printer src/java/edu.42Roma.printer/*/*.java
 
 * EXECUTION *
-java -cp ./target/edu.42Roma.printer App <white_char> <black_char> <image_path>
+java -cp ./target/edu.42Roma.printer app.App <white_char> <black_char> <image_path>
 
 * INFO PARAMS *
 white_char: Character used to represent white color

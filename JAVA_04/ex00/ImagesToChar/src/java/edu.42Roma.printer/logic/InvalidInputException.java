@@ -1,4 +1,6 @@
-class	InvalidInputException extends RuntimeException {
+package	logic;
+
+public class	InvalidInputException extends RuntimeException {
 	public InvalidInputException(String errorMessage) {
 		super(errorMessage);
 	}
