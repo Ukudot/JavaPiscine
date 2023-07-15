@@ -1,4 +1,3 @@
 Manifest-Version: 1.0
-Class-Path: jcommander-1.82.jar
-Main-Class: App
+Main-Class: app.App
 
