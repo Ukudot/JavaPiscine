@@ -39,7 +39,8 @@ class	User {
 
 	@Override
 	public String toString() {
-		return ("User: " + this.login + " (" + this.id + ")");
+		return ("User: " + this.login + " (" + this.id + "), password: " + this.password +
+				", created rooms: " + this.ownedRooms.size() + ", rooms: " + this.rooms.size());
 	}
 
 	@Override
