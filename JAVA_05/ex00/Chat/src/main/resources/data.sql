@@ -1,0 +1,15 @@
+INSERT INTO chat.User(login, password) VALUES ('gpanico', '1234');
+INSERT INTO chat.User(login, password) VALUES ('mpaterno', '1234');
+INSERT INTO chat.User(login, password) VALUES ('adi-stef', '1234');
+INSERT INTO chat.User(login, password) VALUES ('dcastagn', '1234');
+INSERT INTO chat.User(login, password) VALUES ('lde-mich', '1234');
+INSERT INTO chat.Chatroom(name, owner) VALUES ('first chat', 1);
+INSERT INTO chat.Chatroom(name, owner) VALUES ('second chat', 2);
+INSERT INTO chat.Chatroom(name, owner) VALUES ('third chat', 3);
+INSERT INTO chat.Chatroom(name, owner) VALUES ('fourth chat', 4);
+INSERT INTO chat.Chatroom(name, owner) VALUES ('fifth chat', 5);
+INSERT INTO chat.Message(author, room, text, time) VALUES (1, 1, 'ciao', '2023-07-18 08:42:00');
+INSERT INTO chat.Message(author, room, text, time) VALUES (2, 2, 'come', '2023-07-18 08:42:01');
+INSERT INTO chat.Message(author, room, text, time) VALUES (3, 3, 'stai', '2023-07-18 08:42:02');
+INSERT INTO chat.Message(author, room, text, time) VALUES (4, 4, 'tutto', '2023-07-18 08:42:03');
+INSERT INTO chat.Message(author, room, text, time) VALUES (5, 5, 'bene', '2023-07-18 08:42:04');
