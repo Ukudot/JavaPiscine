@@ -49,11 +49,13 @@ class	MessagesRepostoryJdbcImpl implements MessagesRepository {
 				if (rsChatroom.first()) {
 					room = new Chatroom(roomId, rsChatroom.getString("name"), rsChatroom.getLong("owner"), null);
 				}
+				con.close();
 				return (new Message(id, author, room, text, ts));
 			}
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
+		con.close();
 		return (null);
 
 	}
