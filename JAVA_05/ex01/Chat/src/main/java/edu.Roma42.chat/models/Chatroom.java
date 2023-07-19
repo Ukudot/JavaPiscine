@@ -1,6 +1,7 @@
 package	edu.Roma42.chat.models;
 import	java.util.List;
 import	java.util.Objects;
+import	java.util.ArrayList;
 
 class	Chatroom {
 	private long			id;
@@ -12,7 +13,11 @@ class	Chatroom {
 		this.id = id;
 		this.name = name;
 		this.owner = owner;
-		this.messages = messages;
+		if (messages == null) {
+			this.messages = messages;
+		} else {
+			this.messages = new ArrayList<Message>();
+		}
 	}
 
 	public long	getID() {
@@ -33,7 +38,7 @@ class	Chatroom {
 
 	@Override
 	public String toString() {
-		return ("Chatroom: " + this.name + " (" + this.id + "), messages: " + this.messages.size());
+		return ("{Chatroom: " + this.name + " (" + this.id + "), messages: " + this.messages.size() + "}");
 	}
 
 	@Override

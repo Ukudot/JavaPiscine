@@ -14,12 +14,12 @@ class	User {
 		this.id = id;
 		this.login = login;
 		this.password = password;
-		if (ownedRooms) {
+		if (ownedRooms == null) {
 			this.ownedRooms = ownedRooms;
 		} else {
 			this.ownedRooms = new ArrayList<Chatroom>();
 		}
-		if (rooms) {
+		if (rooms == null) {
 			this.rooms = rooms;
 		} else {
 			this.rooms = new ArrayList<Chatroom>();

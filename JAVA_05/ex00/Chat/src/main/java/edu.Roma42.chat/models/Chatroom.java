@@ -13,7 +13,7 @@ class	Chatroom {
 		this.id = id;
 		this.name = name;
 		this.owner = owner;
-		if (messages) {
+		if (messages == null) {
 			this.messages = messages;
 		} else {
 			this.messages = new ArrayList<Message>();
