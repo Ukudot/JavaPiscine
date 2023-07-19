@@ -4,6 +4,7 @@ import	edu.Roma42.chat.repositories.*;
 import	java.io.BufferedReader;
 import	java.io.InputStreamReader;
 import	java.io.InputStream;
+import	java.io.FileReader;
 import	javax.sql.DataSource;
 import	java.sql.Connection;
 import	java.sql.Statement;
@@ -16,7 +17,7 @@ import	com.zaxxer.hikari.HikariDataSource;
 class	Program {
 	private static final String	DB_URL = "jdbc:postgresql://localhost:5432/chatrooms";
 	private static final String	DB_USR = "postgres";
-	private static final String	DB_PWD = "1234";
+	private static final String	DB_PWD = "password";
 	private static final String	DB_SCHEMA = "schema.sql";
 	private static final String	DB_DATA = "data.sql";
 
@@ -25,7 +26,7 @@ class	Program {
 		HikariConfig		config;
 
 		config = new HikariConfig();
-		config.setJdbcUrl(Program.DB_URL);
+		config.setJdbcUrl(DB_URL);
 		config.setUsername(Program.DB_USR);
 		config.setPassword(Program.DB_PWD);
 		ds = new HikariDataSource(config);
@@ -39,13 +40,16 @@ class	Program {
 		try {
 			in = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader()
 						.getResourceAsStream(filename)));
-			line = in.readLine().replace(';', ' ');
-			while (line == null) {
-				stm.execute(line);
-				line = in.readLine().replace(';', ' ');
+			line = in.readLine();
+			while (line != null) {
+				line = line.replace(';', ' ');
+				stm.executeUpdate(line);
+				line = in.readLine();
 			}
+			stm.execute("CREATE SCHEMA IF NOT EXISTS chat");
 			in.close();
 		} catch (Exception e) {
+			System.err.println(e.getMessage());
 			System.err.println("Error: cannot access database");
 			System.exit(-1);
 		}
@@ -71,7 +75,6 @@ class	Program {
 		Scanner				scanner;
 
 		msg = Optional.empty();
-		System.out.println("ciao");
 		try {
 			ds = Program.createDataSource();
 			Program.fillDataBase(ds);
@@ -84,7 +87,7 @@ class	Program {
 			System.exit(-1);
 		}
 		if (msg.isPresent()) {
-			System.out.println(msg);
+			System.out.println(msg.get());
 		} else {
 			System.out.println("message not found");
 		}

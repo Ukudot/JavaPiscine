@@ -34,7 +34,7 @@ public class	MessagesRepositoryJdbcImpl implements MessagesRepository {
 		Chatroom	room = null;
 
 		try {
-			stm = this.con.createStatement();
+			stm = this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			rsMessage = stm.executeQuery("SELECT * FROM chat.Message WHERE id=" + id);
 			if (rsMessage.first()) {
 				authorId = rsMessage.getLong("author");

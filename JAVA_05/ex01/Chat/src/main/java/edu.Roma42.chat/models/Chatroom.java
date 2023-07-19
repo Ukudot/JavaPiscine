@@ -14,9 +14,9 @@ public class	Chatroom {
 		this.name = name;
 		this.owner = owner;
 		if (messages == null) {
-			this.messages = messages;
-		} else {
 			this.messages = new ArrayList<Message>();
+		} else {
+			this.messages = messages;
 		}
 	}
 

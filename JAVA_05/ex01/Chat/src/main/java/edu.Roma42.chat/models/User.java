@@ -15,14 +15,14 @@ public class	User {
 		this.login = login;
 		this.password = password;
 		if (ownedRooms == null) {
-			this.ownedRooms = ownedRooms;
-		} else {
 			this.ownedRooms = new ArrayList<Chatroom>();
+		} else {
+			this.ownedRooms = ownedRooms;
 		}
 		if (rooms == null) {
-			this.rooms = rooms;
-		} else {
 			this.rooms = new ArrayList<Chatroom>();
+		} else {
+			this.rooms = rooms;
 		}
 	}
 
