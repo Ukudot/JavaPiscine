@@ -1,0 +1,6 @@
+edu/Roma42/chat/repositories/MessagesRepository.class
+edu/Roma42/chat/app/Program.class
+edu/Roma42/chat/repositories/MessagesRepositoryJdbcImpl.class
+edu/Roma42/chat/models/Message.class
+edu/Roma42/chat/models/User.class
+edu/Roma42/chat/models/Chatroom.class
