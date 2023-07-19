@@ -39,7 +39,7 @@ class	Message {
 
 	@Override
 	public String toString() {
-		return ("Message: " + this.text + " (" + this.id + "), from: " + this.author + " in chatroom: " + this.room);
+		return ("{Message: " + this.text + " (" + this.id + "), from: " + this.author + " in chatroom: " + this.room + "}");
 	}
 
 	@Override
