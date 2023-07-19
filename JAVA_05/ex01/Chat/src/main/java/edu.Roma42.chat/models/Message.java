@@ -2,14 +2,14 @@ package	edu.Roma42.chat.models;
 import	java.util.List;
 import	java.util.Objects;
 
-class	Message {
+public class	Message {
 	private long		id;
 	private User		author;
 	private Chatroom	room;
 	private String		text;
 	private String		time;
 
-	public	Message(int id, User author, Chatroom room, String text, String time) {
+	public	Message(long id, User author, Chatroom room, String text, String time) {
 		this.id = id;
 		this.author = author;
 		this.room = room;

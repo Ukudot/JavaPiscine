@@ -1,7 +1,7 @@
 package	edu.Roma42.chat.repositories;
 import	edu.Roma42.chat.models.Message;
-import	java.util.Optional<T>;
+import	java.util.Optional;
 
-interface	MessagesRepository {
-	Optional<Message>	findById(long id);
+public interface	MessagesRepository {
+	public Optional<Message>	findById(long id);
 }

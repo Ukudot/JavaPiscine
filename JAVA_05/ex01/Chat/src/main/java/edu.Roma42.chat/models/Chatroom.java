@@ -3,13 +3,13 @@ import	java.util.List;
 import	java.util.Objects;
 import	java.util.ArrayList;
 
-class	Chatroom {
+public class	Chatroom {
 	private long			id;
 	private String			name;
 	private User			owner;
 	private	List<Message>	messages;
 
-	public	Chatroom(int id, String name, User owner, List<Message> messages) {
+	public	Chatroom(long id, String name, User owner, List<Message> messages) {
 		this.id = id;
 		this.name = name;
 		this.owner = owner;

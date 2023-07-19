@@ -7,12 +7,21 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<artifactId>chat</artifactId>
 	<version>1</version>
 	<properties>
-		<maven.compile.source>1.8</maven.compiler.source>
-		<maven.compile.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
-	<dependency>
-		<groupId>com.zaxxer</groupId>
-		<artifactId>HikariCP</artifactId>
-		<version>4.0.3</version>
-	</dependency>
+	<dependencies>
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>4.0.3</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+	</build>
 </project>  

@@ -3,14 +3,14 @@ import	java.util.List;
 import	java.util.Objects;
 import	java.util.ArrayList;
 
-class	User {
+public class	User {
 	private long			id;
 	private String			login;
 	private String			password;
 	private	List<Chatroom>	ownedRooms;
 	private List<Chatroom>	rooms;
 
-	public	User(int id, String login, String password, List<Chatroom> ownedRooms, List<Chatroom> rooms) {
+	public	User(long id, String login, String password, List<Chatroom> ownedRooms, List<Chatroom> rooms) {
 		this.id = id;
 		this.login = login;
 		this.password = password;

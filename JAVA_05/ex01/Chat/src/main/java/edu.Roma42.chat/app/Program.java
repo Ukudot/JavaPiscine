@@ -9,6 +9,7 @@ import	java.sql.Connection;
 import	java.sql.Statement;
 import	java.sql.SQLException;
 import	java.util.Scanner;
+import	java.util.Optional;
 import	com.zaxxer.hikari.HikariConfig;
 import	com.zaxxer.hikari.HikariDataSource;
 
@@ -16,7 +17,7 @@ class	Program {
 	private static final String	DB_URL = "jdbc:postgresql://localhost:5432/";
 	private static final String	DB_USR = "gpanico";
 	private static final String	DB_PWD = "1234";
-	private static final String	DB_SCHEMA "schema.sql";
+	private static final String	DB_SCHEMA = "schema.sql";
 	private static final String	DB_DATA = "data.sql";
 
 	private static DataSource	createDataSource() {
@@ -31,19 +32,20 @@ class	Program {
 		return (ds);
 	}
 
-	private static void	executeQueryFile(Statement stm, String filename) {
+	private void	executeQueryFile(Statement stm, String filename) {
 		BufferedReader	in;
+		String			line;
 
 		try {
-			in = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(filename)));
-			line = in.readLine().replace(';', '');
-			while (line) {
+			in = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader()
+						.getResourceAsStream(filename)));
+			line = in.readLine().replace(';', ' ');
+			while (line == null) {
 				stm.execute(line);
-				line = in.readLine().replace(';', '');
+				line = in.readLine().replace(';', ' ');
 			}
 			in.close();
 		} catch (Exception e) {
-			in.close();
 			System.err.println("Error: cannot access database");
 			System.exit(-1);
 		}
@@ -51,33 +53,39 @@ class	Program {
 
 	private static void	fillDataBase(DataSource ds) throws SQLException {
 		Connection	con;
-		String		line;
 		Statement	stm;
+		Program		instance;
 
 		con = ds.getConnection();
 		stm = con.createStatement();
-		Program.executeQueryFile(stm, Program.DB_SCHEMA);
-		Program.executeQueryFile(stm, Program.DB_DATA);
+		instance = new Program();
+		instance.executeQueryFile(stm, Program.DB_SCHEMA);
+		instance.executeQueryFile(stm, Program.DB_DATA);
 		con.close();
 	}
 
 	public static void	main(String args[]) {
-		DataSource	ds;
-		Message		msg;
-		long		id;
-		Scanner		scanner;
+		DataSource			ds;
+		Optional<Message>	msg;
+		long				id;
+		Scanner				scanner;
 
-		ds = Program.createDataSource();
-		Program.fillDataBase();
-		scanner = new Scanner(System.in);
-		System.out.print("-> ");
+		msg = Optional.empty();
 		try {
+			ds = Program.createDataSource();
+			Program.fillDataBase(ds);
+			scanner = new Scanner(System.in);
+			System.out.print("-> ");
 			id = scanner.nextLong();
+			msg = new MessagesRepositoryJdbcImpl(ds).findById(id);
 		} catch (Exception e) {
-			System.out.prinltn(e.getMessage());
+			System.out.println(e.getMessage());
 			System.exit(-1);
 		}
-		msg = new MessagesRepositoryJdbcImpl(ds).findById(id);
-		System.out.println(msg);
+		if (msg.isPresent()) {
+			System.out.println(msg);
+		} else {
+			System.out.println("message not found");
+		}
 	}
 }

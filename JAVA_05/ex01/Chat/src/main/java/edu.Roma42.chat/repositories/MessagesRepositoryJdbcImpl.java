@@ -2,25 +2,25 @@ package edu.Roma42.chat.repositories;
 import	edu.Roma42.chat.models.Message;
 import	edu.Roma42.chat.models.User;
 import	edu.Roma42.chat.models.Chatroom;
-import	java.util.Optional<T>;
+import	java.util.Optional;
 import	javax.sql.DataSource;
 import	java.sql.Connection;
 import	java.sql.SQLException;
 import	java.sql.Statement;
-import	java.sql.ResultState;
-import	java.sql.TimeStamp;
+import	java.sql.ResultSet;
+import	java.sql.Timestamp;
 
-class	MessagesRepostoryJdbcImpl implements MessagesRepository {
+public class	MessagesRepositoryJdbcImpl implements MessagesRepository {
 	DataSource	ds;
 	Connection	con;
 
-	public	MessagesRepostoryJdbcImpl(DataSource ds) throws SQLException {
+	public	MessagesRepositoryJdbcImpl(DataSource ds) throws SQLException {
 		this.ds = ds;
 		this.con = ds.getConnection();
 	}
 
 	@Override
-	Optional<Message>	findById(long id) {
+	public Optional<Message>	findById(long id) {
 		Statement	stm;
 		ResultSet	rsMessage;
 		ResultSet	rsAuthor;
@@ -29,7 +29,7 @@ class	MessagesRepostoryJdbcImpl implements MessagesRepository {
 		Long		authorId;
 		Long		roomId;
 		String		text;
-		TimeStamp	ts;
+		String		ts;
 		User		author = null;
 		Chatroom	room = null;
 
@@ -39,24 +39,23 @@ class	MessagesRepostoryJdbcImpl implements MessagesRepository {
 			if (rsMessage.first()) {
 				authorId = rsMessage.getLong("author");
 				roomId = rsMessage.getLong("room");
-				text = rsMessage.getText("text");
-				ts = rs.Message.getTimestamp("time");
+				text = rsMessage.getString("text");
+				ts = rsMessage.getString("time");
 				rsAuthor = stm.executeQuery("SELECT * FROM chat.User WHERE id=" + authorId);
 				if (rsAuthor.first()) {
 					author = new User(authorId, rsAuthor.getString("login"), rsAuthor.getString("password"), null, null);
 				}
 				rsChatroom = stm.executeQuery("SELECT * FROM chat.Chatroom WHERE id=" + roomId);
 				if (rsChatroom.first()) {
-					room = new Chatroom(roomId, rsChatroom.getString("name"), rsChatroom.getLong("owner"), null);
+					room = new Chatroom(roomId, rsChatroom.getString("name"), null, null);
 				}
 				con.close();
-				return (new Message(id, author, room, text, ts));
+				return (Optional.of(new Message(id, author, room, text, ts)));
 			}
+			con.close();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
-		con.close();
-		return (null);
-
+		return (Optional.empty());
 	}
 }
