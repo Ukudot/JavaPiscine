@@ -14,8 +14,8 @@ import	com.zaxxer.hikari.HikariConfig;
 import	com.zaxxer.hikari.HikariDataSource;
 
 class	Program {
-	private static final String	DB_URL = "jdbc:postgresql://localhost:5432/";
-	private static final String	DB_USR = "gpanico";
+	private static final String	DB_URL = "jdbc:postgresql://localhost:5432/chatrooms";
+	private static final String	DB_USR = "postgres";
 	private static final String	DB_PWD = "1234";
 	private static final String	DB_SCHEMA = "schema.sql";
 	private static final String	DB_DATA = "data.sql";
@@ -71,6 +71,7 @@ class	Program {
 		Scanner				scanner;
 
 		msg = Optional.empty();
+		System.out.println("ciao");
 		try {
 			ds = Program.createDataSource();
 			Program.fillDataBase(ds);
