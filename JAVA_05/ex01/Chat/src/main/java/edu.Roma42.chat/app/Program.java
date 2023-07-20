@@ -4,7 +4,7 @@ import	edu.Roma42.chat.repositories.*;
 import	java.io.BufferedReader;
 import	java.io.InputStreamReader;
 import	java.io.InputStream;
-import	java.io.FileReader;
+import	java.io.IOException;
 import	javax.sql.DataSource;
 import	java.sql.Connection;
 import	java.sql.Statement;
@@ -20,6 +20,23 @@ class	Program {
 	private static final String	DB_PWD = "password";
 	private static final String	DB_SCHEMA = "schema.sql";
 	private static final String	DB_DATA = "data.sql";
+
+	private static String	buildSQL(BufferedReader in) throws IOException {
+		String			line;
+		StringBuilder	sb;
+
+		sb = new StringBuilder();
+		line = in.readLine();
+		if (line == null) {
+			return (null);
+		}
+		while (!line.endsWith(";")) {
+			sb.append(line);
+			line = in.readLine();
+		}
+		line = sb.append(line).toString();
+		return (line);
+	}
 
 	private static DataSource	createDataSource() {
 		HikariDataSource	ds;
@@ -40,11 +57,11 @@ class	Program {
 		try {
 			in = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader()
 						.getResourceAsStream(filename)));
-			line = in.readLine();
+			line = Program.buildSQL(in);
 			while (line != null) {
 				line = line.replace(';', ' ');
 				stm.executeUpdate(line);
-				line = in.readLine();
+				line = Program.buildSQL(in);
 			}
 			stm.execute("CREATE SCHEMA IF NOT EXISTS chat");
 			in.close();

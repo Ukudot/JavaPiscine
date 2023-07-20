@@ -38,7 +38,7 @@ public class	Chatroom {
 
 	@Override
 	public String toString() {
-		return ("{Chatroom: " + this.name + " (" + this.id + "), messages: " + this.messages.size() + "}");
+		return ("{Chatroom: " + this.name + " (" + this.id + "), owner: " + this.owner + " messages: " + this.messages.size() + "}");
 	}
 
 	@Override
