@@ -17,10 +17,10 @@ CREATE TABLE chat.Chatroom (
 
 CREATE TABLE chat.Message (
 	id SERIAL PRIMARY KEY,
-	author INT NOT NULL,
-	room INT NOT NULL,
-	text TEXT NOT NULL,
-	time TIMESTAMP NOT NULL,
+	author INT,
+	room INT,
+	text TEXT,
+	time TIMESTAMP,
 	FOREIGN KEY (author)
 		REFERENCES chat.User(id),
 	FOREIGN KEY (room)

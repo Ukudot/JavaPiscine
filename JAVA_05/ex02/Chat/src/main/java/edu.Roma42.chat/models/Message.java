@@ -1,4 +1,5 @@
 package	edu.Roma42.chat.models;
+import	edu.Roma42.chat.exceptions.WrongParameterException;
 import	java.util.List;
 import	java.util.Objects;
 
@@ -11,6 +12,18 @@ public class	Message {
 
 	public	Message(long id, User author, Chatroom room, String text, String time) {
 		this.id = id;
+		this.author = author;
+		this.room = room;
+		this.text = text;
+		this.time = time;
+	}
+
+	public	Message(String id, User author, Chatroom room, String text, String time) throws WrongParameterException {
+		if (id == null) {
+			this.id = -1;
+		} else {
+			throw new WrongParameterException(id + " isn't a valid id");
+		}
 		this.author = author;
 		this.room = room;
 		this.text = text;
@@ -43,7 +56,11 @@ public class	Message {
 
 	@Override
 	public String toString() {
-		return ("{Message: " + this.text + " (" + this.id + "), from: " + this.author + " in chatroom: " + this.room + "}");
+		if (this.id == -1) {
+			return ("{Message: " + this.text + " (null), from: " + this.author + " in chatroom: " + this.room + "}");
+		} else {
+			return ("{Message: " + this.text + " (" + this.id + "), from: " + this.author + " in chatroom: " + this.room + "}");
+		}
 	}
 
 	@Override

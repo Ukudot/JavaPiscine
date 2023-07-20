@@ -1,4 +1,5 @@
 package	edu.Roma42.chat.models;
+import	edu.Roma42.chat.exceptions.WrongParameterException;
 import	java.util.List;
 import	java.util.Objects;
 import	java.util.ArrayList;
@@ -12,6 +13,26 @@ public class	User {
 
 	public	User(long id, String login, String password, List<Chatroom> ownedRooms, List<Chatroom> rooms) {
 		this.id = id;
+		this.login = login;
+		this.password = password;
+		if (ownedRooms == null) {
+			this.ownedRooms = new ArrayList<Chatroom>();
+		} else {
+			this.ownedRooms = ownedRooms;
+		}
+		if (rooms == null) {
+			this.rooms = new ArrayList<Chatroom>();
+		} else {
+			this.rooms = rooms;
+		}
+	}
+
+	public	User(String id, String login, String password, List<Chatroom> ownedRooms, List<Chatroom> rooms) throws WrongParameterException {
+		if (id == null) {
+			this.id = -1;
+		} else {
+			throw new WrongParameterException(id + " isn't a valid id");
+		}
 		this.login = login;
 		this.password = password;
 		if (ownedRooms == null) {
@@ -48,8 +69,13 @@ public class	User {
 
 	@Override
 	public String toString() {
-		return ("{User: " + this.login + " (" + this.id + "), password: " + this.password +
-				", created rooms: " + this.ownedRooms.size() + ", rooms: " + this.rooms.size() + "}");
+		if (this.id == -1) {
+			return ("{User: " + this.login + " (null), password: " + this.password +
+					", created rooms: " + this.ownedRooms.size() + ", rooms: " + this.rooms.size() + "}");
+		} else {
+			return ("{User: " + this.login + " (" + this.id + "), password: " + this.password +
+					", created rooms: " + this.ownedRooms.size() + ", rooms: " + this.rooms.size() + "}");
+		}
 	}
 
 	@Override

@@ -1,4 +1,5 @@
 package	edu.Roma42.chat.models;
+import	edu.Roma42.chat.exceptions.WrongParameterException;
 import	java.util.List;
 import	java.util.Objects;
 import	java.util.ArrayList;
@@ -11,6 +12,21 @@ public class	Chatroom {
 
 	public	Chatroom(long id, String name, User owner, List<Message> messages) {
 		this.id = id;
+		this.name = name;
+		this.owner = owner;
+		if (messages == null) {
+			this.messages = new ArrayList<Message>();
+		} else {
+			this.messages = messages;
+		}
+	}
+
+	public	Chatroom(String id, String name, User owner, List<Message> messages) throws WrongParameterException {
+		if (id == null) {
+			this.id = -1;
+		} else {
+			throw new WrongParameterException(id + " isn't a valid id");
+		}
 		this.name = name;
 		this.owner = owner;
 		if (messages == null) {
@@ -38,7 +54,11 @@ public class	Chatroom {
 
 	@Override
 	public String toString() {
-		return ("{Chatroom: " + this.name + " (" + this.id + "), owner: " + this.owner + " messages: " + this.messages.size() + "}");
+		if (this.id == -1) {
+			return ("{Chatroom: " + this.name + " (null), owner: " + this.owner + " messages: " + this.messages.size() + "}");
+		} else {
+			return ("{Chatroom: " + this.name + " (" + this.id + "), owner: " + this.owner + " messages: " + this.messages.size() + "}");
+		}
 	}
 
 	@Override

@@ -93,13 +93,13 @@ class	Program {
 		User						author;
 		Chatroom					room;
 
-		author = new User(1L, "user", "user", null, null);
-		room = new Chatroom(1L, "room", author, null);
-		msg = new Message(-1, author, room, "ciao come stai", LocalDateTime.now().toString().replace("T", " "));
-		author = new User(2L, "user", "user", null, null);
-		room = new Chatroom(4L, "room", author, null);
-		msg2 = new Message(-1, author, room, "tutto bene", LocalDateTime.now().toString().replace("T", " "));
 		try {
+			author = new User(1L, "user", "user", null, null);
+			room = new Chatroom(1L, "room", author, null);
+			msg = new Message(null, author, room, "ciao come stai", LocalDateTime.now().toString().replace("T", " "));
+			author = new User(2L, "user", "user", null, null);
+			room = new Chatroom(7L, "room", author, null);
+			msg2 = new Message(null, author, room, "tutto bene", LocalDateTime.now().toString().replace("T", " "));
 			ds = Program.createDataSource();
 			Program.fillDataBase(ds);
 			messagesRepository = new MessagesRepositoryJdbcImpl(ds);
