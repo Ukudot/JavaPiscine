@@ -9,15 +9,15 @@ import	java.sql.Statement;
 import	java.sql.ResultSet;
 import	java.sql.SQLException;
 
+class	ProductException extends RuntimeException {
+	public	ProductException(String errorMessage) {
+		super(errorMessage);
+	}
+}
+
 public class	ProductsRepositoryJdbcImpl implements ProductsRepository {
 	DataSource	db;
 	Connection	con;
-
-	public class	ProductException extends RuntimeException {
-		public	ProductException(String errorMessage) {
-			super(errorMessage);
-		}
-	}
 
 	public ProductsRepositoryJdbcImpl(DataSource db) throws SQLException {
 		this.db = db;
@@ -25,7 +25,7 @@ public class	ProductsRepositoryJdbcImpl implements ProductsRepository {
 	}
 
 	@Override
-	public List<Product> findAll(Long id) {
+	public List<Product> findAll() {
 		List<Product>	products;
 		Statement		stm;
 		ResultSet		rs;
@@ -33,7 +33,7 @@ public class	ProductsRepositoryJdbcImpl implements ProductsRepository {
 		products = new ArrayList<Product>();
 		try {
 			stm = this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			rs = stm.executeQuery("SELECT * FROM products");
+			rs = stm.executeQuery("SELECT * FROM product");
 			while (rs.next()) {
 				products.add(new Product(new Long(rs.getLong("identifier")), rs.getString("name"), new Float(rs.getFloat("price"))));
 			}
@@ -53,7 +53,7 @@ public class	ProductsRepositoryJdbcImpl implements ProductsRepository {
 
 		try {
 			stm = this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			rs = stm.executeQuery("SELECT * FROM products WHERE id=" + id.longValue());
+			rs = stm.executeQuery("SELECT * FROM product WHERE identifier =" + id.longValue());
 			if (!rs.next()) {
 				throw new ProductException("Product with " + id.longValue() + " not found");
 			}
@@ -72,8 +72,8 @@ public class	ProductsRepositoryJdbcImpl implements ProductsRepository {
 
 		try {
 			stm = this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			stm.executeUpdate("UPDATE product, SET name = " + (product.getName() == null ? null : "'" + product.getName() + "'")
-				   	+ ", price = " + product.getPrice().floatValue() + " WHERE id = " + product.getID().longValue());
+			stm.executeUpdate("UPDATE product SET name = " + (product.getName() == null ? null : "'" + product.getName() + "'")
+				   	+ ", price = " + product.getPrice().floatValue() + " WHERE identifier = " + product.getID().longValue());
 			stm.close();
 		} catch (SQLException e) {
 			System.err.println(e);
@@ -104,7 +104,7 @@ public class	ProductsRepositoryJdbcImpl implements ProductsRepository {
 
 		try {
 			stm = this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			stm.executeUpdate("DELETE * FROM product WHERE id = " + id.longValue());
+			stm.executeUpdate("DELETE FROM product WHERE identifier = " + id.longValue());
 			stm.close();
 		} catch (SQLException e) {
 			System.err.println(e);
