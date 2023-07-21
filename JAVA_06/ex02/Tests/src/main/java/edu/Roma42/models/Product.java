@@ -1,36 +1,37 @@
 package	edu.Roma42.models;
+import	java.util.Objects;
 
 public class	Product {
-	Long	identifier;
+	Long	id;
 	String	name;
 	Float	price;
 
 	public	Product() {
-		this.identifier = new Long(null);
+		this.id = new Long(null);
 		this.name = null;
 		this.price = new Float(null);
 	}
 
 	public	Product(Long id, String name, Float price) {
-		this.identifier = id;
+		this.id = id;
 		this.name = name;
 		this.price = price;
 	}
 
-	public long	getId() {
-		return (this.identifier.longValue());
+	public Long	getID() {
+		return (this.id);
 	}
 
 	public String	getName() {
 		return (this.name);
 	}
 	
-	public float	getPrice() {
-		return (this.price.floatValue());
+	public Float	getPrice() {
+		return (this.price);
 	}
 
 	public void	setId(Long id) {
-		this.identifier = id;
+		this.id = id;
 	}
 
 	public void setName(String name) {
@@ -59,7 +60,7 @@ public class	Product {
 				&& this.price.equals(tmpProduct.getPrice())) {
 			return (true);
 		}
-		return (false)
+		return (false);
 	}
 
 	@Override

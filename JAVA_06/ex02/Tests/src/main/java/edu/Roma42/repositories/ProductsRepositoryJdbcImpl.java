@@ -9,23 +9,23 @@ import	java.sql.Statement;
 import	java.sql.ResultSet;
 import	java.sql.SQLException;
 
-public class	ProductsRepositoriesJdbcImpl extends ProductsRepository {
+public class	ProductsRepositoryJdbcImpl implements ProductsRepository {
 	DataSource	db;
 	Connection	con;
 
-	public class	ProductNotFoundException extends RuntimeException {
-		public	ProductNotFoundException(String errorMessage) {
+	public class	ProductException extends RuntimeException {
+		public	ProductException(String errorMessage) {
 			super(errorMessage);
 		}
 	}
 
-	public ProductsRepositoriesJdbcImpl(DataSource db) throws SQLException {
+	public ProductsRepositoryJdbcImpl(DataSource db) throws SQLException {
 		this.db = db;
 		this.con = db.getConnection();
 	}
 
 	@Override
-	List<Product> findAll() {
+	public List<Product> findAll(Long id) {
 		List<Product>	products;
 		Statement		stm;
 		ResultSet		rs;
@@ -38,7 +38,7 @@ public class	ProductsRepositoriesJdbcImpl extends ProductsRepository {
 				products.add(new Product(new Long(rs.getLong("identifier")), rs.getString("name"), new Float(rs.getFloat("price"))));
 			}
 			stm.close();
-		} catch (SQLException) {
+		} catch (SQLException e) {
 			System.err.println(e);
 			return (null);
 		}
@@ -46,7 +46,7 @@ public class	ProductsRepositoriesJdbcImpl extends ProductsRepository {
 	}
 
 	@Override
-	Optional<Product>	findById(Long id) {
+	public Optional<Product>	findById(Long id) {
 		Product			product;
 		Statement		stm;
 		ResultSet		rs;
@@ -55,11 +55,11 @@ public class	ProductsRepositoriesJdbcImpl extends ProductsRepository {
 			stm = this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			rs = stm.executeQuery("SELECT * FROM products WHERE id=" + id.longValue());
 			if (!rs.next()) {
-				throw new ProductNotFoundException("Product with " + id.longValue() + " not found");
+				throw new ProductException("Product with " + id.longValue() + " not found");
 			}
 			product = new Product(new Long(rs.getLong("identifier")), rs.getString("name"), new Float(rs.getFloat("price")));
 			stm.close();
-		} catch (SQLException) {
+		} catch (SQLException e) {
 			System.err.println(e);
 			return (Optional.empty());
 		}
@@ -67,25 +67,51 @@ public class	ProductsRepositoriesJdbcImpl extends ProductsRepository {
 	}
 
 	@Override
-	void	update(Product product) {
-		Product			product;
+	public void	update(Product product) {
+		Statement		stm;
+
+		try {
+			stm = this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stm.executeUpdate("UPDATE product, SET name = " + (product.getName() == null ? null : "'" + product.getName() + "'")
+				   	+ ", price = " + product.getPrice().floatValue() + " WHERE id = " + product.getID().longValue());
+			stm.close();
+		} catch (SQLException e) {
+			System.err.println(e);
+			return ;
+		}
+	}
+
+	@Override
+	public void	save(Product product) {
+		Statement		stm;
+
+		try {
+			stm = this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stm.executeUpdate("INSERT INTO product(identifier, name, price) VALUES(" + product.getID().floatValue()
+					+ ", " + (product.getName() == null ? null : "'" + product.getName() + "'")
+				   	+ ", " + product.getPrice().floatValue() + ")");
+			stm.close();
+		} catch (SQLException e) {
+			System.err.println(e);
+			return ;
+		}
+	}
+
+	@Override
+	public void	delete(Long id) {
 		Statement		stm;
 		ResultSet		rs;
 
 		try {
-			stm = this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			rs = stm.executeQuery("SELECT * FROM products WHERE id=" + id.longValue());
-			if (!rs.next()) {
-				throw new ProductNotFoundException("Product with " + id.longValue() + " not found");
-			}
-			product = new Product(new Long(rs.getLong("identifier")), rs.getString("name"), new Float(rs.getFloat("price")));
+			stm = this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stm.executeUpdate("DELETE * FROM product WHERE id = " + id.longValue());
 			stm.close();
-		} catch (SQLException) {
+		} catch (SQLException e) {
 			System.err.println(e);
-			return (Optional.empty());
+			return ;
 		}
-		
 	}
+
 	public void	closeCon() throws SQLException {
 		this.con.close();
 	}
