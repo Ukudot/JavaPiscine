@@ -1,0 +1,28 @@
+DROP SCHEMA IF EXISTS chat CASCADE;
+CREATE SCHEMA IF NOT EXISTS chat;
+
+CREATE TABLE chat.User (
+	id SERIAL PRIMARY KEY,
+	login VARCHAR(50) UNIQUE NOT NULL,
+	password VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE chat.Chatroom (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(50) UNIQUE NOT NULL,
+	owner INT NOT NULL,
+	FOREIGN KEY (owner)
+		REFERENCES chat.User(id)
+);
+
+CREATE TABLE chat.Message (
+	id SERIAL PRIMARY KEY,
+	author INT,
+	room INT,
+	text TEXT,
+	time TIMESTAMP,
+	FOREIGN KEY (author)
+		REFERENCES chat.User(id),
+	FOREIGN KEY (room)
+		REFERENCES chat.Message(id)
+);
