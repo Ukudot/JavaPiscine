@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: edu.Roma42.numbers.NumberWorkerTest
--------------------------------------------------------------------------------
-Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.205 s - in edu.Roma42.numbers.NumberWorkerTest

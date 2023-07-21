@@ -1,6 +1,0 @@
-edu/Roma42/numbers/NumberWorker.class
-edu/Roma42/repositories/ProductsRepositoryJdbcImpl.class
-edu/Roma42/repositories/ProductsRepositoryJdbcImpl$ProductException.class
-edu/Roma42/numbers/IllegalNumberException.class
-edu/Roma42/repositories/ProductsRepository.class
-edu/Roma42/models/Product.class
