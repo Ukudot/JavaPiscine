@@ -6,6 +6,7 @@ import static	org.junit.jupiter.api.Assertions.assertNotNull;
 import static	org.junit.jupiter.api.Assertions.assertTrue;
 import	org.junit.jupiter.api.BeforeEach;
 import	org.junit.jupiter.api.RepeatedTest;
+import	org.junit.jupiter.api.DisplayName;
 import	javax.sql.DataSource;
 import	java.sql.Connection;
 import	java.sql.SQLException;
@@ -14,6 +15,7 @@ public class	EmbeddedDataSourceTest {
 	DataSource	db;
 
 	@BeforeEach
+	@DisplayName("init launched")
 	public void	init() {
 		this.db = new EmbeddedDatabaseBuilder()
 			.generateUniqueName(true)
@@ -25,6 +27,7 @@ public class	EmbeddedDataSourceTest {
 	}
 
 	@RepeatedTest(5)
+	@DisplayName("checkConnection launched")
 	void checkConnection() throws SQLException {
 		Connection	con;
 
