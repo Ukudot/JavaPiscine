@@ -15,7 +15,7 @@ public class	TilesRepositoryImplTest {
 
 		ts = new TilesRepositoryImpl("application-production.properties");
 		found = ts.findByType("enemy");
-		MapServiceImpl msi = new MapServiceImpl(ts, 10, 10, 30);
+		MapServiceImpl msi = new MapServiceImpl(ts, 2, 11, 8);
 		assertEquals(EXPECTED_FIND_BY_TYPE, found);
 	}
 }

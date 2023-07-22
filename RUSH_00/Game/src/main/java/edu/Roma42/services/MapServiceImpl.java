@@ -98,6 +98,7 @@ public class	MapServiceImpl implements MapService {
 		Tile	enemy;
 		Tile	wall;
 		int		size;
+		int		n;
 
 		enemy = ts.findByType("enemy");
 		wall = ts.findByType("wall");
@@ -106,7 +107,18 @@ public class	MapServiceImpl implements MapService {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (mat[i][j] == 1) {
-					tiles[i][j] = rand.nextInt(2) == 1 ? enemy : wall;
+					if (ce == 0 || cw == 0) {
+						tiles[i][j] = ce == 0 ? wall : enemy;
+						continue;
+					}
+					n = rand.nextInt(2);
+					if (n == 0) {
+						tiles[i][j] = enemy;
+						ce--;
+					} else {
+						tiles[i][j] = wall;
+						cw--;
+					}
 				}
 			}
 		}
