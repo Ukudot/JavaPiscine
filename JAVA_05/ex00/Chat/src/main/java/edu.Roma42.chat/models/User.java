@@ -1,5 +1,5 @@
 package	edu.Roma42.chat.models;
-import	java.util.List;
+import	java.util.List
 import	java.util.Objects;
 import	java.util.ArrayList;
 
