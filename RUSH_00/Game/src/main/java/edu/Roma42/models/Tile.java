@@ -6,6 +6,8 @@ public class Tile {
 	Color	bgColor;
 	char	type;
 
+	public	Tile() {}
+
 	public	Tile(Color bgColor, char type) {
 		this.bgColor = bgColor;
 		this.type = type;

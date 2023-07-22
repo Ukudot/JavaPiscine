@@ -1,13 +1,15 @@
 package	edu.Roma42.models;
 import	java.util.Objects;
 
-public class	Map {
+public class	MyMap {
 	int		playerPos[];
 	int		targetPos[];
 	int		size;
 	Tile	map[][];
 
-	public	Map(int playerPos[], int targetPos[], int size, Tile map[][]) {
+	public	MyMap() {}
+
+	public	MyMap(int playerPos[], int targetPos[], int size, Tile map[][]) {
 		this.playerPos = playerPos;
 		this.targetPos = targetPos;
 		this.size = size;
@@ -62,13 +64,13 @@ public class	Map {
 
 	@Override
 	public boolean	equals(Object obj) {
-		Map	tmpMap;
+		MyMap	tmpMap;
 		if (this == obj) {
 			return (true);
-		} else if (!(obj instanceof Map)) {
+		} else if (!(obj instanceof MyMap)) {
 			return (false);
 		}
-		tmpMap = (Map) obj;
+		tmpMap = (MyMap) obj;
 		if (this.playerPos.equals(tmpMap.getPlayerPos()) && this.targetPos.equals(tmpMap.getTargetPos())
 				&& this.size == tmpMap.getSize() && this.map.equals(tmpMap.getMap())) {
 			return (true);

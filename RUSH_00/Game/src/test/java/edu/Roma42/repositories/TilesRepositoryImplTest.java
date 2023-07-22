@@ -1,5 +1,6 @@
 package	edu.Roma42.repositories;
 import	edu.Roma42.models.Tile;
+import	edu.Roma42.services.MapServiceImpl;
 import	java.awt.Color;
 import	org.junit.jupiter.api.Test;
 import static	org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,6 +15,7 @@ public class	TilesRepositoryImplTest {
 
 		ts = new TilesRepositoryImpl("application-production.properties");
 		found = ts.findByType("enemy");
+		MapServiceImpl msi = new MapServiceImpl(ts, 10, 10, 30);
 		assertEquals(EXPECTED_FIND_BY_TYPE, found);
 	}
 }
