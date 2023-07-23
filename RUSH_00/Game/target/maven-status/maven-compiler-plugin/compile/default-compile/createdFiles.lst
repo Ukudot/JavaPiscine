@@ -1,0 +1,7 @@
+edu/Roma42/models/Tile.class
+edu/Roma42/models/MyMap.class
+edu/Roma42/repositories/TilesRepositoryImpl.class
+edu/Roma42/repositories/TilesRepository.class
+edu/Roma42/game/Game.class
+edu/Roma42/services/MapService.class
+edu/Roma42/services/MapServiceImpl.class
