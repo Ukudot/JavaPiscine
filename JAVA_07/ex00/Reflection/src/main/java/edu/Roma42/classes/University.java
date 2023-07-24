@@ -4,24 +4,24 @@ import	java.util.StringJoiner;
 public class	University {
 	private	String	name;
 	private	String	city;
-	private	int		year;
-	private	int		studentNumber;
+	private	Integer	year;
+	private	Integer	studentNumber;
 
 	public	University() {};
 
-	public	University(String name, String city, int year, int studentNumber) {
+	public	University(String name, String city, Integer year, Integer studentNumber) {
 		this.name = name;
 		this.city = city;
 		this.year = year;
 		this.studentNumber = studentNumber;
 	};
 
-	public int	grow(int newStudents) {
+	public Integer	grow(Integer newStudents) {
 		this.studentNumber += newStudents;
 		return (this.studentNumber);
 	}
 
-	public int	shrink(int oldStudents) {
+	public Integer	shrink(Integer oldStudents) {
 		if (oldStudents > this.studentNumber) {
 			System.out.println("Invalid number of students");
 			return (0);

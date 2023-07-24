@@ -6,12 +6,12 @@ public class	Student {
 	private	String	name;
 	private String	surname;
 	private String	department;
-	private	int		age;
-	private int		year;
+	private	Integer	age;
+	private Integer	year;
 
 	public	Student() {}
 
-	public	Student(String name, String surname, String department, int age, int year) {
+	public	Student(String name, String surname, String department, Integer age, Integer year) {
 		this.name = name;
 		this.surname = surname;
 		this.department = department;

@@ -40,7 +40,13 @@
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
+		  <version>3.8.0</version>
+		 	 <configuration>
+			    <parameters>true</parameters>
+                <testCompilerArgument>-parameters</testCompilerArgument>
+                <source>1.8</source>
+                <target>1.8</target>
+			 </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
@@ -49,6 +55,13 @@
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
+		  <configuration>
+			<archive>
+			  <manifest>
+				<mainClass>edu.Roma42.app.App</mainClass>
+			  </manifest>
+			</archive>
+		  </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
