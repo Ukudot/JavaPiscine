@@ -1,13 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>Annotations</artifactId>
+    <groupId>edu.Roma42</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
 
-  <groupId>edu.Roma42</groupId>
-  <artifactId>Annotations</artifactId>
+  <groupId>edu.Roma42.annotations</groupId>
+  <artifactId>annotations</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>Annotations</name>
-  <packaging>pom</packaging>
+  <name>annotations</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,8 +29,7 @@
   </dependencies>
 
   <build>
-    <pluginManagement>
-      <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>
@@ -70,8 +73,4 @@
       </plugins>
     </pluginManagement>
   </build>
-<modules>  <module>annotations</module>
-    <module>processor</module>
-    <module>form</module>
-  </modules>
 </project>
