@@ -43,7 +43,10 @@
 		  <version>3.8.0</version>
 		 	 <configuration>
 			    <parameters>true</parameters>
-                <testCompilerArgument>-parameters</testCompilerArgument>
+				<!--testCompilerArgument>-parameters</testCompilerArgument-->
+				<!--compierArgs>
+				  <arg>-parameters</arg>
+				</compierArgs-->
                 <source>1.8</source>
                 <target>1.8</target>
 			 </configuration>
