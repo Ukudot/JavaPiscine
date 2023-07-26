@@ -1,0 +1,2 @@
+META-INF/services/javax.annotation.processing.Processor
+edu/Roma42/processors/HtmlProcessor.class
