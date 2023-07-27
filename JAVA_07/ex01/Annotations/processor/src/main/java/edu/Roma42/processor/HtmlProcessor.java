@@ -47,7 +47,7 @@ public class	HtmlProcessor extends AbstractProcessor {
 
 		for (Element elem : roundEnv.getElementsAnnotatedWith(HtmlForm.class)) {
 			TypeMirror	form = elem.asType();
-			stringJoiner = new StringJoiner(", ", "<form ", ">");
+			stringJoiner = new StringJoiner(" ", "<form ", ">");
 			for (AnnotationMirror annMir : elem.getAnnotationMirrors()) {
 				for (ExecutableElement execElem : annMir.getElementValues().keySet()) {
 					if (execElem.getSimpleName().toString().equals("fileName")) {
@@ -68,7 +68,7 @@ public class	HtmlProcessor extends AbstractProcessor {
 			this.printWriter.println(stringJoiner.toString());	
 			for (Element elem2 : elem.getEnclosedElements()) {
 				if (elem2.getKind().isField()) {
-					stringJoiner = new StringJoiner(", ", "<input ", ">");
+					stringJoiner = new StringJoiner(" ", "<input ", ">");
 					for (AnnotationMirror annMir : elem2.getAnnotationMirrors()) {
 						for (ExecutableElement execElem : annMir.getElementValues().keySet()) {
 							stringJoiner.add(execElem.getSimpleName() + " = " + annMir.getElementValues().get(execElem));
