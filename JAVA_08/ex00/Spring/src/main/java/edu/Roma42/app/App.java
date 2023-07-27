@@ -9,7 +9,7 @@ public class	App {
 	public static void	main(String args[]) {
 		ApplicationContext	context = new ClassPathXmlApplicationContext("context.xml");
 		Printer	printer = context.getBean("printerWithPrefix", Printer.class);
-		printer.setPrefix("Prefix");
 		printer.print("Hello!");
+		System.out.println("prova");
 	}
 }
