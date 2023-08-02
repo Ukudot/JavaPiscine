@@ -1,0 +1,7 @@
+edu/Roma42/exceptions/AnnotationNotFoundException.class
+edu/Roma42/annotations/OrmColumnId.class
+edu/Roma42/managers/OrmManager.class
+edu/Roma42/annotations/OrmColumn.class
+edu/Roma42/models/User.class
+edu/Roma42/Program/Program.class
+edu/Roma42/annotations/OrmEntity.class

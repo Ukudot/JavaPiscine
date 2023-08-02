@@ -1,0 +1,7 @@
+/home/gpanico/JavaPiscine/JAVA_07/ex02/ORM/src/main/java/edu/Roma42/Program/Program.java
+/home/gpanico/JavaPiscine/JAVA_07/ex02/ORM/src/main/java/edu/Roma42/annotations/OrmColumn.java
+/home/gpanico/JavaPiscine/JAVA_07/ex02/ORM/src/main/java/edu/Roma42/annotations/OrmEntity.java
+/home/gpanico/JavaPiscine/JAVA_07/ex02/ORM/src/main/java/edu/Roma42/managers/OrmManager.java
+/home/gpanico/JavaPiscine/JAVA_07/ex02/ORM/src/main/java/edu/Roma42/exceptions/AnnotationNotFoundException.java
+/home/gpanico/JavaPiscine/JAVA_07/ex02/ORM/src/main/java/edu/Roma42/annotations/OrmColumnId.java
+/home/gpanico/JavaPiscine/JAVA_07/ex02/ORM/src/main/java/edu/Roma42/models/User.java
