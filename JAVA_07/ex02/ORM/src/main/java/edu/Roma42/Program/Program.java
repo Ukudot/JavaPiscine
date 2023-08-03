@@ -10,5 +10,6 @@ public class	Program	{
 		user = new User(new Long(1), "Giovanni", "Panico", 24);
 		ormManager = new OrmManager();
 		ormManager.save(user);
+		ormManager.update(user);
 	}
 }
