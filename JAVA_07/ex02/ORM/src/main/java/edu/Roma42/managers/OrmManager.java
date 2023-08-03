@@ -29,6 +29,8 @@ public class	OrmManager {
 		this.types.put("Integer", "INT");
 		this.types.put("Long", "BIGINT");
 		this.types.put("String", "VARCHAR");
+//		this.types.put("Boolean", "BOOLEAN");
+//		this.types.put("Double", "DOUBLE PRECISION");
 	}
 
 	public	OrmManager(DataSource ds) throws SQLException {
@@ -40,6 +42,8 @@ public class	OrmManager {
 		this.types.put("Integer", "INT");
 		this.types.put("Long", "BIGINT");
 		this.types.put("String", "VARCHAR");
+//		this.types.put("Boolean", "BOOLEAN");
+//		this.types.put("Double", "DOUBLE PRECISION");
 		stm = this.con.createStatement();
 		System.out.println(">> log: [input] DROP SCHEMA IF EXISTS " + this.schema + " CASCADE");
 		stm.executeQuery("DROP SCHEMA IF EXISTS " + this.schema + " CASCADE");
@@ -103,6 +107,44 @@ public class	OrmManager {
 		}
 	}
 
+	private void	processAnnotation(class classEntity) throws AnnotationNotFoundException {
+		Annotation	tmpAnnotation;
+		String		name;
+		String		length;
+		String		type;
+
+		this.columns = new HashMap<String, String>();
+		tmpAnnotation = classEntity.getAnnotation(OrmEntity.class);
+		if (tmpAnnotation == null) {
+			throw new AnnotationNotFoundException("Error: not annotated class");
+		}
+		try {
+			this.tableName = this.schema + "." + tmpAnnotation.annotationType().getMethod("table").invoke(tmpAnnotation).toString();
+			for (Field field : classEntity.getDeclaredFields()) {
+				tmpAnnotation = field.getAnnotation(OrmColumnId.class);
+				if (tmpAnnotation != null) {
+					this.columns.put(field.getName(), "BIGSERIAL");
+					continue ;
+				}
+				tmpAnnotation = field.getAnnotation(OrmColumn.class);
+				if (tmpAnnotation == null) {
+					continue ;
+				}
+				name = tmpAnnotation.annotationType().getMethod("name").invoke(tmpAnnotation).toString();
+				length = tmpAnnotation.annotationType().getMethod("length").invoke(tmpAnnotation).toString();
+				type = this.types.get(field.getType().getSimpleName());
+				if (type.equals("VARCHAR")) {
+					this.columns.put(name, type + "(" + length + ")");
+				} else {
+					this.columns.put(name, type);
+				}
+			}
+		} catch (Exception e) {
+			System.err.println(e);
+			return ;
+		}
+	}
+
 	private void	createTable() throws SQLException {
 		String			query;
 		StringJoiner	sj;
@@ -130,8 +172,8 @@ public class	OrmManager {
 		SQLWarning		warning;
 
 		try {
-			processAnnotation(entity);
-			createTable();
+			this.processAnnotation(entity);
+			this.createTable();
 			insert = new StringJoiner(", ", "INSERT INTO " + this.tableName + "(", ")");	
 			values = new StringJoiner(", ", "VALUES(", ")");
 			this.columnsObject.forEach((k, v) -> {
@@ -169,7 +211,7 @@ public class	OrmManager {
 		SQLWarning		warning;
 
 		try {
-			processAnnotation(entity);
+			this.processAnnotation(entity);
 			update = new StringJoiner(", ", "UPDATE " + this.tableName + " SET ", "");
 			id = new StringBuilder();
 			idValue = new StringBuilder();
@@ -178,7 +220,7 @@ public class	OrmManager {
 					id.append(k);
 					idValue.append(v);
 				}
-				else if (this.columns.get(k).equals("INT") || this.columns.get(k).equals("BIGINT")) {
+				else if (!this.columns.get(k).startsWith("VARCHAR")) {
 					update.add(k + " = " + v);
 				} else {
 					update.add(k + " = " + (v == null ? null : "'" + v + "'"));
@@ -201,7 +243,31 @@ public class	OrmManager {
 	}
 
 	public <T> T findById(Long id, Class<T> aClass) {
+		Object			ret;
+		ResultSet		rs;
+		Statement		stm;
+		SQLwarning		warning;
+		StringBuilder	idName;
 
+		try {
+			this.processAnnotation(aClass);
+			stm = this.con.createStatement();
+			idName = new StringBuilder();
+			this.columns.forEach((k, v) -> {
+				if (v.equals("BIGSERIAL")) {
+					idName.append(k);
+				}
+			});
+			System.out.println(">> log: [input] SELECT * FROM " + this.tableName + " WHERE " + idName + " = " + id);
+			rs = stm.executeQuery("SELECT * FROM " + this.tableName + " WHERE " + idName + " = " + id);
+			warning = stm.getWarnings();
+			while (warning != null) {
+				System.out.println(">> log: [warning] " + warning.getMessage());
+				warning = warning.getNextWarning();
+			}
+		} catch (AnnotationNotFoundException e){
+			System.err.println(e); 
+		}
 		return (null);
 	}
 }
