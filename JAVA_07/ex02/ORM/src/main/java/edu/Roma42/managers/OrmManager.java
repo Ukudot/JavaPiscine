@@ -9,15 +9,19 @@ import	java.sql.SQLException;
 import	java.sql.SQLWarning;
 import	java.util.Map;
 import	java.util.HashMap;
+import	java.util.List;
+import	java.util.ArrayList;
 import	java.lang.annotation.Annotation;
 import	java.lang.reflect.Field;
 import	java.lang.reflect.Method;
+import	java.lang.reflect.Constructor;
 import	java.lang.reflect.InvocationTargetException;
 import	java.util.StringJoiner;
 
 
 public class	OrmManager {
 	private final String				schema = "orm";
+	private final String				lang = "java.lang.";
 	private DataSource					ds;
 	private Connection					con;
 	private String						tableName;
@@ -29,8 +33,8 @@ public class	OrmManager {
 		this.types.put("Integer", "INT");
 		this.types.put("Long", "BIGINT");
 		this.types.put("String", "VARCHAR");
-//		this.types.put("Boolean", "BOOLEAN");
-//		this.types.put("Double", "DOUBLE PRECISION");
+		this.types.put("Boolean", "BOOLEAN");
+		this.types.put("Double", "DOUBLE PRECISION");
 	}
 
 	public	OrmManager(DataSource ds) throws SQLException {
@@ -42,18 +46,18 @@ public class	OrmManager {
 		this.types.put("Integer", "INT");
 		this.types.put("Long", "BIGINT");
 		this.types.put("String", "VARCHAR");
-//		this.types.put("Boolean", "BOOLEAN");
-//		this.types.put("Double", "DOUBLE PRECISION");
+		this.types.put("Boolean", "BOOLEAN");
+		this.types.put("Double", "DOUBLE PRECISION");
 		stm = this.con.createStatement();
 		System.out.println(">> log: [input] DROP SCHEMA IF EXISTS " + this.schema + " CASCADE");
-		stm.executeQuery("DROP SCHEMA IF EXISTS " + this.schema + " CASCADE");
+		stm.executeUpdate("DROP SCHEMA IF EXISTS " + this.schema + " CASCADE");
 		warning = stm.getWarnings();
 		while (warning != null) {
 			System.out.println(">> log: [warning] " + warning.getMessage());
 			warning = warning.getNextWarning();
 		}
 		System.out.println(">> log: [input] CREATE SCHEMA IF NOT EXISTS " + this.schema);
-		stm.executeQuery("CREATE SCHEMA IF NOT EXISTS " + this.schema);
+		stm.executeUpdate("CREATE SCHEMA IF NOT EXISTS " + this.schema);
 		warning = stm.getWarnings();
 		while (warning != null) {
 			System.out.println(">> log: [warning] " + warning.getMessage());
@@ -107,7 +111,7 @@ public class	OrmManager {
 		}
 	}
 
-	private void	processAnnotation(class classEntity) throws AnnotationNotFoundException {
+	private void	processAnnotation(Class classEntity) throws AnnotationNotFoundException {
 		Annotation	tmpAnnotation;
 		String		name;
 		String		length;
@@ -189,7 +193,7 @@ public class	OrmManager {
 			});
 			System.out.println(">> log: [input] " + insert + " " + values);
 			stm = this.con.createStatement();
-			stm.executeQuery(insert.toString() + " " + values.toString());
+			stm.executeUpdate(insert.toString() + " " + values.toString());
 			warning = stm.getWarnings();
 			while (warning != null) {
 				System.out.println(">> log: [warning] " + warning.getMessage());
@@ -246,8 +250,11 @@ public class	OrmManager {
 		Object			ret;
 		ResultSet		rs;
 		Statement		stm;
-		SQLwarning		warning;
+		SQLWarning		warning;
 		StringBuilder	idName;
+		StringJoiner	output;
+		Constructor		cnst;
+		Annotation		ann;
 
 		try {
 			this.processAnnotation(aClass);
@@ -265,8 +272,41 @@ public class	OrmManager {
 				System.out.println(">> log: [warning] " + warning.getMessage());
 				warning = warning.getNextWarning();
 			}
+			cnst = aClass.getConstructor(null);
+			ret	= cnst.newInstance();
+			output = new StringJoiner(", ", aClass.getSimpleName().toString() + "{", "}");
+			if (rs.next()) {
+				for (Field field : aClass.getDeclaredFields()) {
+					field.setAccessible(true);
+					ann = field.getAnnotation(OrmColumnId.class);
+					if (ann != null) {
+						field.set(ret, field.getType().getConstructor(String.class).newInstance(rs.getString(idName.toString())));
+					} else {
+						ann = field.getAnnotation(OrmColumn.class);
+						if (ann == null) {
+							continue ;
+						}
+						field.set(ret, field.getType()
+								.getConstructor(String.class)
+								.newInstance(rs.getString(ann.annotationType().getDeclaredMethod("name").invoke(ann).toString())));
+					}
+					output.add(field.getName() + " = " + field.get(ret));
+				}
+			}
+			System.out.println(">> log: [output] " + output.toString());
+			return ((T) ret);
 		} catch (AnnotationNotFoundException e){
 			System.err.println(e); 
+		} catch (SQLException e) {
+			System.err.println(e);
+		} catch (InstantiationException e) {
+			System.err.println(e);
+		} catch (IllegalAccessException e) {
+			System.err.println(e);
+		} catch (InvocationTargetException e) {
+			System.err.println(e);
+		} catch (NoSuchMethodException e) {
+			System.err.println(e);
 		}
 		return (null);
 	}

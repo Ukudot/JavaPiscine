@@ -13,12 +13,20 @@ public class	User {
 	private String	lastName;
 	@OrmColumn(name = "age")
 	private Integer	age;
+	@OrmColumn(name = "level")
+	private Double	level;
+	@OrmColumn(name = "test")
+	private Boolean	test;
 
-	public	User(Long id, String firstName, String lastName, Integer age) {
+	public	User() {}
+
+	public	User(Long id, String firstName, String lastName, Integer age, Double level, Boolean test) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
+		this.level = level;
+		this.test = test;
 	}
 
 	public Long	getId() {
@@ -37,6 +45,14 @@ public class	User {
 		return (this.age);
 	}
 
+	public Double	getLevel() {
+		return (this.level);
+	}
+
+	public Boolean	getTest() {
+		return (this.test);
+	}
+
 	public void	setId(Long id) {
 		this.id = id;
 	}
@@ -53,6 +69,14 @@ public class	User {
 		this.age = age;
 	}
 
+	public void	setLevel(Double level) {
+		this.level = level;
+	}
+
+	public void	setTest(Boolean test) {
+		this.test = test;
+	}
+
 	@Override
 	public String	toString() {
 		StringJoiner	stringJoiner;
@@ -61,7 +85,9 @@ public class	User {
 			.add("id = " + this.id)
 			.add("first name = " + this.firstName)
 			.add("last name = " + this.lastName)
-			.add("age = " + this.age);
+			.add("age = " + this.age)
+			.add("level = " + this.level)
+			.add("test = " + this.test);
 		return (stringJoiner.toString());
 	}
 
@@ -78,11 +104,13 @@ public class	User {
 		return (this.id.equals(tmpUser.getId())
 				&& this.firstName.equals(tmpUser.getFirstName())
 				&& this.lastName.equals(tmpUser.getLastName())
-				&& this.age.equals(tmpUser.getAge()));
+				&& this.age.equals(tmpUser.getAge())
+				&& this.level.equals(tmpUser.getAge())
+				&& this.test.equals(tmpUser.getAge()));
 	}
 
 	@Override
 	public int	hashCode() {
-		return (Objects.hash(this.id, this.firstName, this.lastName, this.age));
+		return (Objects.hash(this.id, this.firstName, this.lastName, this.age, this.level, this.test));
 	}
 }
