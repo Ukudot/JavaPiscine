@@ -1,0 +1,5 @@
+edu/Roma42/spring/service/repositories/CrudRepository.class
+edu/Roma42/spring/service/application/Program.class
+edu/Roma42/spring/service/repositories/UsersRepository.class
+edu/Roma42/spring/service/models/User.class
+edu/Roma42/spring/service/repositories/UsersRepositoryJdbcImpl.class
