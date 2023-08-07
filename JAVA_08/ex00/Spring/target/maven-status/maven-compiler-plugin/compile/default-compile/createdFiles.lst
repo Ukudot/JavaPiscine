@@ -1,0 +1,10 @@
+edu/Roma42/preProcessor/PreProcessorToLowerImpl.class
+edu/Roma42/printer/Printer.class
+edu/Roma42/preProcessor/PreProcessor.class
+edu/Roma42/renderer/Renderer.class
+edu/Roma42/printer/PrinterWithDateTimeImpl.class
+edu/Roma42/printer/PrinterWithPrefixImpl.class
+edu/Roma42/app/App.class
+edu/Roma42/renderer/RendererStandardImpl.class
+edu/Roma42/renderer/RendererErrImpl.class
+edu/Roma42/preProcessor/PreProcessorToUpperImpl.class
