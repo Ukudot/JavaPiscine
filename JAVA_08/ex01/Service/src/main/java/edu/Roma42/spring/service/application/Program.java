@@ -57,6 +57,20 @@ public class	Program {
 			System.out.println(user.toString());
 			all = ur.findAll();
 			System.out.println(all);
+			user = new User(new Long(5), "aaa@mail.com");
+			ur.save(user);
+			all = ur.findAll();
+			System.out.println(all);
+			user.setEmail("bbb@mail.com");
+			ur.update(user);
+			all = ur.findAll();
+			System.out.println(all);
+			ur.delete(new Long(5));
+			all = ur.findAll();
+			System.out.println(all);
+			ur = new UsersRepositoryJdbcImpl(ds);
+			user = ur.findByEmail("ciao@mail.com").get();
+			System.out.println(user.toString());
 		} catch (SQLException e) {
 			System.err.println(e);
 		}
